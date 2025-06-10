@@ -1,0 +1,51 @@
+<svg width="900" height="650" viewBox="0 0 900 650" xmlns="http://www.w3.org/2000/svg" style="background:#fafbfc">
+  <!-- Header -->
+  <rect x="0" y="0" width="900" height="60" fill="#1976d2" />
+  <text x="30" y="40" font-size="28" fill="#fff" font-family="sans-serif" font-weight="bold">강아지 키우기 좋은 동네</text>
+
+  <!-- Sidebar -->
+  <rect x="0" y="60" width="200" height="590" fill="#e3eaf2" stroke="#b0b7be" />
+  <text x="30" y="100" font-size="18" fill="#1976d2" font-family="sans-serif">필터/가중치</text>
+  <rect x="30" y="120" width="140" height="30" fill="#fff" stroke="#b0b7be" rx="6" />
+  <text x="40" y="140" font-size="15" fill="#666">동물병원 가중치</text>
+  <rect x="30" y="170" width="140" height="30" fill="#fff" stroke="#b0b7be" rx="6" />
+  <text x="40" y="190" font-size="15" fill="#666">산책로 가중치</text>
+  <rect x="30" y="220" width="140" height="30" fill="#fff" stroke="#b0b7be" rx="6" />
+  <text x="40" y="240" font-size="15" fill="#666">카페/인프라 가중치</text>
+  <rect x="30" y="270" width="140" height="30" fill="#fff" stroke="#b0b7be" rx="6" />
+  <text x="40" y="290" font-size="15" fill="#666">교통 접근성</text>
+
+  <!-- Main Map Area -->
+  <rect x="220" y="80" width="640" height="470" fill="#fff" stroke="#b0b7be" rx="18" />
+  <rect x="235" y="105" width="610" height="430" fill="#e6f1f8" rx="12" />
+  <text x="250" y="130" font-size="17" fill="#1976d2" font-family="sans-serif">부산시 행정동 지도 (히트맵/랭킹)</text>
+  <!-- Example dong shapes -->
+  <ellipse cx="400" cy="250" rx="80" ry="60" fill="#90caf9" opacity="0.6" />
+  <ellipse cx="550" cy="300" rx="60" ry="40" fill="#1976d2" opacity="0.35" />
+  <ellipse cx="700" cy="200" rx="40" ry="30" fill="#43a047" opacity="0.35" />
+  <!-- Map legend -->
+  <rect x="780" y="90" width="60" height="130" fill="#fff" stroke="#b0b7be" rx="10" />
+  <text x="790" y="115" font-size="13" fill="#1976d2">점수 범례</text>
+  <rect x="790" y="130" width="40" height="12" fill="#90caf9" />
+  <text x="835" y="140" font-size="11" fill="#666">상위</text>
+  <rect x="790" y="150" width="40" height="12" fill="#1976d2" />
+  <text x="835" y="160" font-size="11" fill="#666">중간</text>
+  <rect x="790" y="170" width="40" height="12" fill="#43a047" />
+  <text x="835" y="180" font-size="11" fill="#666">하위</text>
+
+  <!-- Tooltip/Popup example -->
+  <rect x="500" y="400" width="170" height="60" fill="#fff" stroke="#b0b7be" rx="8" />
+  <text x="510" y="420" font-size="14" fill="#1976d2">동래구 온천2동</text>
+  <text x="510" y="440" font-size="12" fill="#333">점수: 87.5 (상위 5%)</text>
+  <text x="510" y="455" font-size="12" fill="#555">동물병원 4개, 산책로 2개</text>
+
+  <!-- Ranking Table -->
+  <rect x="220" y="570" width="640" height="60" fill="#fff" stroke="#b0b7be" rx="10" />
+  <text x="240" y="600" font-size="16" fill="#1976d2">랭킹표: 동별 점수/순위</text>
+  <rect x="380" y="580" width="320" height="30" fill="#e3eaf2" rx="5" />
+  <text x="390" y="600" font-size="13" fill="#333">1위: 해운대구 우동 | 2위: 수영구 광안2동 | 3위: 연제구 연산9동 ...</text>
+
+  <!-- Footer -->
+  <rect x="0" y="630" width="900" height="20" fill="#1976d2" />
+  <text x="700" y="645" font-size="11" fill="#fff">© 2025 부산시 강아지 데이터 프로젝트</text>
+</svg>
