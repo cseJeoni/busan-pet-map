@@ -5,10 +5,10 @@
 ---
 
 ## 1. 프로젝트 초기 세팅
-- [ ] Git 저장소 초기화 및 기본 디렉토리 구조 생성 (`src`, `docs`, `data`, 등)
-- [ ] requirements.md, design.md, ui_wireframe.svg 등 문서 파일 추가
-- [ ] `.gitignore`, `README.md`, 라이선스 파일 작성
-- [ ] **☑ 작업 내용 확인 및 커밋 #1: 프로젝트 구조 및 초기 문서 커밋**
+- [x] Git 저장소 초기화 및 기본 디렉토리 구조 생성 (`src`, `docs`, `data`, 등)
+- [x] requirements.md, design.md, ui_wireframe.svg 등 문서 파일 추가
+- [x] `.gitignore`, `README.md`, 라이선스 파일 작성
+- [x] **☑ 작업 내용 확인 및 커밋 #1: 프로젝트 구조 및 초기 문서 커밋**
 
 ---
 

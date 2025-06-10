@@ -6,14 +6,24 @@
   <!-- Sidebar -->
   <rect x="0" y="60" width="200" height="590" fill="#e3eaf2" stroke="#b0b7be" />
   <text x="30" y="100" font-size="18" fill="#1976d2" font-family="sans-serif">필터/가중치</text>
-  <rect x="30" y="120" width="140" height="30" fill="#fff" stroke="#b0b7be" rx="6" />
-  <text x="40" y="140" font-size="15" fill="#666">동물병원 가중치</text>
-  <rect x="30" y="170" width="140" height="30" fill="#fff" stroke="#b0b7be" rx="6" />
-  <text x="40" y="190" font-size="15" fill="#666">산책로 가중치</text>
-  <rect x="30" y="220" width="140" height="30" fill="#fff" stroke="#b0b7be" rx="6" />
-  <text x="40" y="240" font-size="15" fill="#666">카페/인프라 가중치</text>
-  <rect x="30" y="270" width="140" height="30" fill="#fff" stroke="#b0b7be" rx="6" />
-  <text x="40" y="290" font-size="15" fill="#666">교통 접근성</text>
+  <!-- 필터 체크박스 -->
+  <rect x="30" y="120" width="20" height="20" fill="#fff" stroke="#b0b7be" rx="4" />
+  <text x="60" y="135" font-size="15" fill="#666">동물병원</text>
+  <rect x="30" y="150" width="20" height="20" fill="#fff" stroke="#b0b7be" rx="4" />
+  <text x="60" y="165" font-size="15" fill="#666">산책로</text>
+  <rect x="30" y="180" width="20" height="20" fill="#fff" stroke="#b0b7be" rx="4" />
+  <text x="60" y="195" font-size="15" fill="#666">카페/인프라</text>
+  <rect x="30" y="210" width="20" height="20" fill="#fff" stroke="#b0b7be" rx="4" />
+  <text x="60" y="225" font-size="15" fill="#666">교통</text>
+  <!-- 가중치 슬라이더 -->
+  <rect x="30" y="250" width="140" height="12" fill="#fff" stroke="#b0b7be" rx="6" />
+  <text x="35" y="260" font-size="12" fill="#888">가중치 조정</text>
+  <!-- 나에게 맞는 동네 찾기 버튼 -->
+  <rect x="30" y="280" width="140" height="32" fill="#1976d2" rx="8" />
+  <text x="45" y="302" font-size="15" fill="#fff" font-weight="bold">나에게 맞는 동네 찾기</text>
+  <!-- 클러스터별 보기 버튼 -->
+  <rect x="30" y="325" width="140" height="28" fill="#43a047" rx="8" />
+  <text x="45" y="345" font-size="14" fill="#fff">클러스터별 보기</text>
 
   <!-- Main Map Area -->
   <rect x="220" y="80" width="640" height="470" fill="#fff" stroke="#b0b7be" rx="18" />
