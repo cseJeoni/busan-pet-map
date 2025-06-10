@@ -32,3 +32,4 @@ poetry.lock
 
 # 기타
 *.sqlite3
+BND_ADM_DONG_PG/*.shp
