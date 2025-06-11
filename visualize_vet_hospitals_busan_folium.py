@@ -44,7 +44,7 @@ with open('data/busan_emd_wgs84.geojson', encoding='utf-8') as f:
     busan_emd_data = json.load(f)
 
 # 행정동 경계를 FeatureGroup으로 묶음 (토글 가능하게)
-boundary_group = folium.FeatureGroup(name='행정동 경계')
+boundary_group = folium.FeatureGroup(name='행정동 경계', show=True)
 
 # 임의의 색상 생성하는 함수
 def color_by_code(code):
@@ -78,7 +78,7 @@ folium.GeoJson(
 boundary_group.add_to(m)
 
 # 이름 마커를 위한 FeatureGroup 생성
-name_group = folium.FeatureGroup(name='행정동 이름')
+name_group = folium.FeatureGroup(name='행정동 이름', show=False)
 
 # 이름은 폴리곤의 모든 좌표 평균값(경계 중심 근사치)에 표시
 for feature in busan_emd_data['features']:
@@ -111,8 +111,8 @@ name_group.add_to(m)
 # 중복 코드 제거 - 이미 name_group에 이름이 추가되었음
 
 # 8. 병원 위치 빨간 점으로 표시 (팝업 가로) - 레이어 컨트롤용 FeatureGroup 사용
-# 동물병원 마커들을 FeatureGroup으로 묶음
-vet_hospitals_group = folium.FeatureGroup(name='동물병원')
+# 동물병원 레이어를 위한 FeatureGroup 생성
+hospital_group = folium.FeatureGroup(name='동물병원', show=True)
 
 for _, row in df.iterrows():
     name = row.get('사업장명', '')
@@ -125,10 +125,10 @@ for _, row in df.iterrows():
         fill_color='red',
         fill_opacity=0.7,
         popup=folium.Popup(popup_html, max_width=200)
-    ).add_to(vet_hospitals_group)
+    ).add_to(hospital_group)
     
 # FeatureGroup을 지도에 추가
-vet_hospitals_group.add_to(m)
+hospital_group.add_to(m)
 
 # 9. 카카오 API로 검색한 부산 애견카페 위치를 파란색 점으로 표시
 try:
@@ -137,7 +137,7 @@ try:
         dog_cafes = json.load(f)
     
     # 애견카페 마커들을 FeatureGroup으로 묶음
-    dog_cafes_group = folium.FeatureGroup(name='애견카페')
+    dog_cafe_group = folium.FeatureGroup(name='애견카페', show=False)
     
     # 카페 마커 추가
     for cafe in dog_cafes:
@@ -166,10 +166,10 @@ try:
             fill_color='blue',
             fill_opacity=0.7,
             popup=folium.Popup(popup_html, max_width=250)
-        ).add_to(dog_cafes_group)
+        ).add_to(dog_cafe_group)
     
     # 애견카페 그룹을 지도에 추가
-    dog_cafes_group.add_to(m)
+    dog_cafe_group.add_to(m)
     print(f'애견카페 {len(dog_cafes)}개를 지도에 추가했습니다.')
     
 except Exception as e:
@@ -182,7 +182,7 @@ try:
         parks = json.load(f)
     
     # 공원 마커들을 FeatureGroup으로 묶음
-    parks_group = folium.FeatureGroup(name='공원')
+    park_group = folium.FeatureGroup(name='공원', show=False)
     
     # 공원 마커 추가
     for park in parks:
@@ -211,17 +211,17 @@ try:
             fill_color='green',
             fill_opacity=0.7,
             popup=folium.Popup(popup_html, max_width=250)
-        ).add_to(parks_group)
+        ).add_to(park_group)
     
     # 공원 그룹을 지도에 추가
-    parks_group.add_to(m)
+    park_group.add_to(m)
     print(f'공원 {len(parks)}개를 지도에 추가했습니다.')
     
 except Exception as e:
     print(f'공원 데이터 로드 및 표시 중 오류 발생: {e}')
 
-# 모든 레이어를 컨트롤할 수 있는 레이어 컨트롤 추가
-folium.LayerControl().add_to(m)
+# 모든 레이어를 컨트롤할 수 있는 레이어 컨트롤 추가 (항상 펼쳐진 상태로 표시)
+folium.LayerControl(collapsed=False).add_to(m)
 
 os.makedirs('output', exist_ok=True)
 output_path = 'output/vet_hospitals_busan_map.html'
