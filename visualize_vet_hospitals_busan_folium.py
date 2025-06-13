@@ -294,8 +294,56 @@ try:
         filtered_parks_district
     ]
     
-    print(f"부산 지역으로 필터링된 공원 데이터: {len(parks_df)}개")
+    print(f"# 부산 지역으로 필터링된 공원 데이터: {len(parks_df)}개")
+    
+    # 공원 이름 중복 제거 (반복되는 기본 공원명으로 통합)
+    def extract_base_park_name(park_name):
+        """
+        공원 이름에서 기본 공원명 추출
+        예: '부산시민공원 동물유치원' -> '부산시민공원'
+        """
+        import re
+        # 공원, 공원 관련 시설, 공원 내 장소 간의 구분을 위한 범용 패턴
+        base_patterns = [
+            r'(.+?공원)[ ]?.*',  # '공원'(공원)으로 끝나는 모든 공원명
+            r'(.+?수목원)[ ]?.*',  # '수목원'(수목원)으로 끝나는 이름
+            r'(.+?공원로)[ ]?.*',  # '공원로'(공원로)로 끝나는 이름
+            r'(.+?박물관)[ ]?.*',  # '박물관'(박물관)으로 끝나는 이름
+        ]
         
+        for pattern in base_patterns:
+            match = re.match(pattern, park_name)
+            if match:
+                return match.group(1)
+        
+        # 패턴에 맞지 않는 경우, 처음 나오는 공백이나 특수문자를 기준으로 분할
+        words = park_name.split()
+        if len(words) > 1:
+            # 처음 두 단어만 사용 - 일반적인 공원은 두 단어 이하인 경우가 많음
+            if len(words) > 2 and len(words[0]) + len(words[1]) > 6:  # 기본적으로 두 단어만 가져가되, 너무 짧지 않을 경우
+                return words[0] + " " + words[1]
+            return words[0]  # 가장 간단한 경우는 첫번째 단어만 사용
+        
+        return park_name  # 분할할 수 없을 경우 원래 이름 그대로 반환
+    
+    # 같은 기본 공원명으로 그룹화
+    parks_df['base_park_name'] = parks_df['name'].apply(extract_base_park_name)
+    print(f"\n공원 기본명 추출 예시:")
+    sample_idx = parks_df.sample(5).index
+    for idx in sample_idx:
+        print(f"- 원래: {parks_df.loc[idx, 'name']}, 추출한 기본명: {parks_df.loc[idx, 'base_park_name']}")
+    
+    # 각 공원 그룹에서 대표 항목 선택
+    # 1. 기본 공원명으로 그룹화
+    # 2. 각 그룹에서 이름이 가장 짧은 항목을 대표로 선택 (일반적으로 기본 공원명)
+    parks_grouped = parks_df.groupby('base_park_name').first().reset_index()
+    
+    # 그룹화 결과 확인
+    print(f"\n같은 기본명 공원 그룹화 전: {len(parks_df)}개, 그룹화 후: {len(parks_grouped)}개")
+    
+    # 그룹화된 공원 데이터 사용
+    parks_df = parks_grouped
+    
     # CSV 통합 데이터 로드 (애견카페 데이터용)
     facilities_df = pd.read_csv('output/facilities_with_district.csv')
     
