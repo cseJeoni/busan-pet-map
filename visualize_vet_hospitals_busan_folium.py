@@ -6,6 +6,7 @@
 import os
 import pandas as pd
 import folium
+import re
 import json
 # 1. 데이터 로드
 csv_path = "data/vet_hospitals_busan.csv"
@@ -28,7 +29,109 @@ def to_latlng(x, y):
     lng, lat = transformer.transform(x, y)
     return lat, lng
 
+# 부산시 경계 좌표 (WGS84)
+busan_lat_min = 34.8
+busan_lat_max = 35.4
+busan_lng_min = 128.7
+busan_lng_max = 129.3
+
+# 행정구역으로 필터링할 부산시 구/군 목록
+busan_districts = [
+    '중구', '서구', '동구', '영도구', '부산진구', '동래구', '남구', '북구', 
+    '해운대구', '사하구', '금정구', '강서구', '연제구', '수영구', '사상구', 
+    '기장군', '기장읍', '일광읍', '장안읍', '부산'
+]
+
+# 공원 필터링을 위한 키워드 및 함수 (search_kakao_places_rect.py에서 가져옴)
+PARK_KEYWORDS = [
+    '도보여행', '둘레길', '하천', '공원', '산책로', '산책길', '산', '등산', '동산',
+    '수목원', '생태공원', '체육공원', '문화공원', '도시공원', '국립공원', '자연공원'
+]
+
+PARK_EXCLUSION_KEYWORDS = [
+    '화장실', '주차장', '주차타워', '주차시설', '공중화장실', '편의점', '관리소',
+    '관리사무소', '매점', '기념품', '판매점', '체험관', '카페', '관광안내', '안내소',
+    '전기차충전소'  # 전기차충전소 추가
+]
+
+def filter_park_only(places, strict_category=False):
+    """
+    공원 관련 장소만 필터링하고 화장실, 주차장 등은 제외
+    
+    Args:
+        places: 카카오 장소 API 결과 목록 (딕셔너리 리스트)
+        strict_category: True이면 '여행 > 관광,명소' 카테고리만 허용 (기본값: False)
+        
+    Returns:
+        걸을 수 있는 공원 관련 장소만 필터링된 목록
+    """
+    filtered = []
+    tourist_category = '여행 > 관광,명소'
+    
+    for place in places:
+        category_name = place.get('category_name', '')
+        place_name = place.get('place_name', '')
+        road_address = place.get('road_address_name', '')
+        address = place.get('address_name', '')
+        
+        if strict_category:
+            # 카테고리가 '여행 > 관광,명소'로 시작하는지 확인
+            if category_name.startswith(tourist_category):
+                is_excluded_by_name = False
+                # 장소 이름에 제외 키워드가 포함되어 있는지 확인
+                for ex_keyword in PARK_EXCLUSION_KEYWORDS:
+                    if ex_keyword in place_name:
+                        is_excluded_by_name = True
+                        break
+                if not is_excluded_by_name:
+                    filtered.append(place)
+            continue  # strict_category 모드에서는 다른 조건 검사 없이 다음 장소로 넘어감
+        
+        exclude = False
+        for keyword in PARK_EXCLUSION_KEYWORDS:
+            if (keyword in place_name or 
+                keyword in category_name or 
+                keyword in road_address or 
+                keyword in address):
+                exclude = True
+                break
+        
+        if exclude:
+            continue
+            
+        include = False
+        for keyword in PARK_KEYWORDS:
+            if (keyword in place_name or 
+                keyword in category_name or 
+                keyword in road_address or 
+                keyword in address):
+                include = True
+                break
+                
+        if tourist_category in category_name:
+            include = True
+        
+        if include:
+            filtered.append(place)
+    
+    return filtered
+
 df['lat'], df['lng'] = zip(*df.apply(lambda row: to_latlng(row[x_col], row[y_col]), axis=1))
+
+# 5. 부산 지역 좌표 범위로 동물병원 데이터 필터링
+print(f"동물병원 데이터 좌표 변환 후: {len(df)}개")
+original_vet_count = len(df)
+df = df[
+    (df['lat'].notna()) & (df['lng'].notna()) &
+    (df['lat'] >= busan_lat_min) &
+    (df['lat'] <= busan_lat_max) &
+    (df['lng'] >= busan_lng_min) &
+    (df['lng'] <= busan_lng_max)
+]
+df.dropna(subset=['lat', 'lng'], inplace=True) # NaN이 포함된 행이 있다면 제거
+print(f"부산 좌표 범위 및 유효한 좌표로 필터링된 동물병원 수: {len(df)} (원래 {original_vet_count}개)")
+
+# 다음 단계 주석 번호는 수동으로 업데이트 필요 (예: # 5. 지도 생성 -> # 6. 지도 생성)
 
 # 5. 지도 생성 (중심: 부산시청 위경도, zoom 조정)
 map_center = [35.1796, 129.0756]
@@ -130,36 +233,128 @@ for _, row in df.iterrows():
 # FeatureGroup을 지도에 추가
 hospital_group.add_to(m)
 
-# 9. 카카오 API로 검색한 부산 애견카페 위치를 파란색 점으로 표시
+# 9. 통합 데이터(CSV)에서 모든 시설 정보 불러오기
 try:
-    # 애견카페 데이터 로드
-    with open('data/busan_dog_cafes.json', encoding='utf-8') as f:
-        dog_cafes = json.load(f)
+    # 공원 데이터 로드 (강력 필터링된 파일 우선 사용, 없으면 원시 데이터에 필터 적용)
+    strict_filtered_park_file = 'data/busan_parks_strict_filtered.json'
+    raw_park_file = 'data/busan_parks_all.json'
+    parks_data = [] # 최종적으로 사용할 공원 데이터 리스트
+
+    if os.path.exists(strict_filtered_park_file):
+        print(f"'{strict_filtered_park_file}' (강력 필터링된 공원 데이터) 사용 중...")
+        with open(strict_filtered_park_file, 'r', encoding='utf-8') as f:
+            parks_data = json.load(f)
+        print(f"로드된 강력 필터링 공원 데이터: {len(parks_data)}개")
+    elif os.path.exists(raw_park_file):
+        print(f"'{raw_park_file}' (원시 공원 데이터) 사용 중. 강력 필터링 적용...")
+        with open(raw_park_file, 'r', encoding='utf-8') as f:
+            raw_parks_list = json.load(f) # 원시 데이터 로드
+        print(f"원시 공원 데이터 {len(raw_parks_list)}개에 대해 강력 필터링 적용 중...")
+        parks_data = filter_park_only(raw_parks_list, strict_category=True)
+        print(f"강력 필터링 후 공원 데이터: {len(parks_data)}개 (원래 {len(raw_parks_list)}개)")
+    else:
+        print(f"경고: 공원 데이터 파일({strict_filtered_park_file} 또는 {raw_park_file})을 찾을 수 없습니다.")
+        parks_data = []  # 공원 데이터를 데이터프레임으로 변환
+    parks_list = []
+    for park in parks_data:
+        # 필요한 정보만 추출
+        parks_list.append({
+            'name': park.get('place_name', ''),
+            'x': park.get('x', '0'),  # 경도
+            'y': park.get('y', '0'),  # 위도
+            'district': park.get('address_name', '').split(' ')[0] if park.get('address_name') else '',
+            'type': '공원'
+        })
+    
+    # 공원 데이터프레임 생성
+    parks_df = pd.DataFrame(parks_list)
+    print(f"로드된 공원 데이터 (필터링 전): {len(parks_df)}개")
+    
+    # 공원 데이터에도 부산 지역 좌표 필터링 적용
+    parks_df['x'] = parks_df['x'].astype(float)
+    parks_df['y'] = parks_df['y'].astype(float)
+    
+    # 부산시 행정구역명 리스트 활용한 필터링
+    filtered_parks_district = []
+    for district in parks_df['district']:
+        is_busan = False
+        if isinstance(district, str):
+            for busan_district in busan_districts:
+                if busan_district in district or district.startswith('부산'):
+                    is_busan = True
+                    break
+        filtered_parks_district.append(is_busan)
+    
+    # 좌표와 행정구역 기반으로 부산 지역 공원만 필터링
+    parks_df = parks_df[
+        (parks_df['y'] >= busan_lat_min) & 
+        (parks_df['y'] <= busan_lat_max) & 
+        (parks_df['x'] >= busan_lng_min) & 
+        (parks_df['x'] <= busan_lng_max) &
+        filtered_parks_district
+    ]
+    
+    print(f"부산 지역으로 필터링된 공원 데이터: {len(parks_df)}개")
+        
+    # CSV 통합 데이터 로드 (애견카페 데이터용)
+    facilities_df = pd.read_csv('output/facilities_with_district.csv')
+    
+    # 애견카페 데이터만 추출
+    dog_cafes_df = facilities_df[facilities_df['type'] == '애견카페']
+    print(f"로드된 애견카페 데이터: {len(dog_cafes_df)}개")
+    
+    # 부산 지역 필터링을 위한 busan_districts는 이미 파일 상단에 정의되어 있음
+    
+    # 행정동명에 부산 구/군이 포함된 데이터 필터링
+    filtered_districts = []
+    for district in facilities_df['district']:
+        is_busan = False
+        if isinstance(district, str):
+            for busan_district in busan_districts:
+                if busan_district in district:
+                    is_busan = True
+                    break
+            if district.endswith('동') or district.endswith('읍'):
+                is_busan = True
+        filtered_districts.append(is_busan)
+    
+    
+    # 애견카페 데이터만 facilities_df에서 필터링
+    dog_cafes_df = facilities_df[
+        (facilities_df['type'] == '애견카페') &
+        (facilities_df['y'] >= busan_lat_min) & 
+        (facilities_df['y'] <= busan_lat_max) & 
+        (facilities_df['x'] >= busan_lng_min) & 
+        (facilities_df['x'] <= busan_lng_max) &
+        filtered_districts
+    ]
+    
+    print(f'부산 지역 데이터로 필터링 결과:')
+    print(f'- 애견카페: {len(dog_cafes_df)}개')
+    print(f'- 공원: {len(parks_df)}개')
+    print(f'- 총 시설: {len(dog_cafes_df) + len(parks_df)}개')
     
     # 애견카페 마커들을 FeatureGroup으로 묶음
     dog_cafe_group = folium.FeatureGroup(name='애견카페', show=False)
     
     # 카페 마커 추가
-    for cafe in dog_cafes:
-        name = cafe.get('place_name', '')
+    for _, cafe in dog_cafes_df.iterrows():
+        name = cafe.get('name', '')
         x = float(cafe.get('x', 0))  # 경도
         y = float(cafe.get('y', 0))  # 위도
-        address = cafe.get('address_name', '')
-        road_address = cafe.get('road_address_name', '')
-        phone = cafe.get('phone', '')
+        district = cafe.get('district', '')
         
         # 팝업 내용 구성
         popup_html = f'''
             <div style="width:200px">
                 <h4 style="margin-bottom:5px">{name}</h4>
-                <div style="font-size:0.9em; color:#666;">📍 {road_address or address}</div>
-                {f'<div style="font-size:0.9em; margin-top:2px;">☎️ {phone}</div>' if phone else ''}
+                <div style="font-size:0.9em; color:#666;">📍 {district} 소재</div>
             </div>
         '''
         
         # 파란색 원형 마커 추가
         folium.CircleMarker(
-            location=[y, x],  # 카카오맵 API는 (경도, 위도) 순으로 좌표 제공
+            location=[y, x],
             radius=5,
             color='blue',
             fill=True,
@@ -170,41 +365,29 @@ try:
     
     # 애견카페 그룹을 지도에 추가
     dog_cafe_group.add_to(m)
-    print(f'애견카페 {len(dog_cafes)}개를 지도에 추가했습니다.')
-    
-except Exception as e:
-    print(f'애견카페 데이터 로드 및 표시 중 오류 발생: {e}')
-
-# 10. 카카오 API로 검색한 부산 공원 위치를 초록색 점으로 표시
-try:
-    # 공원 데이터 로드
-    with open('data/busan_parks.json', encoding='utf-8') as f:
-        parks = json.load(f)
+    print(f'애견카페 {len(dog_cafes_df)}개를 지도에 추가했습니다.')
     
     # 공원 마커들을 FeatureGroup으로 묶음
     park_group = folium.FeatureGroup(name='공원', show=False)
     
     # 공원 마커 추가
-    for park in parks:
-        name = park.get('place_name', '')
+    for _, park in parks_df.iterrows():
+        name = park.get('name', '')
         x = float(park.get('x', 0))  # 경도
         y = float(park.get('y', 0))  # 위도
-        address = park.get('address_name', '')
-        road_address = park.get('road_address_name', '')
-        phone = park.get('phone', '')
+        district = park.get('district', '')
         
         # 팝업 내용 구성
         popup_html = f'''
             <div style="width:200px">
                 <h4 style="margin-bottom:5px">{name}</h4>
-                <div style="font-size:0.9em; color:#666;">📍 {road_address or address}</div>
-                {f'<div style="font-size:0.9em; margin-top:2px;">☎️ {phone}</div>' if phone else ''}
+                <div style="font-size:0.9em; color:#666;">📍 {district} 소재</div>
             </div>
         '''
         
         # 초록색 원형 마커 추가
         folium.CircleMarker(
-            location=[y, x],  # 카카오맵 API는 (경도, 위도) 순으로 좌표 제공
+            location=[y, x],
             radius=5,
             color='green',
             fill=True,
@@ -215,10 +398,10 @@ try:
     
     # 공원 그룹을 지도에 추가
     park_group.add_to(m)
-    print(f'공원 {len(parks)}개를 지도에 추가했습니다.')
+    print(f'공원 {len(parks_df)}개를 지도에 추가했습니다.')
     
 except Exception as e:
-    print(f'공원 데이터 로드 및 표시 중 오류 발생: {e}')
+    print(f'시설 데이터 로드 및 표시 중 오류 발생: {e}')
 
 # 모든 레이어를 컨트롤할 수 있는 레이어 컨트롤 추가 (항상 펼쳐진 상태로 표시)
 folium.LayerControl(collapsed=False).add_to(m)

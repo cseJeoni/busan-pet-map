@@ -6,14 +6,46 @@
     <title>부산에서 강아지 키우기 좋은 동네</title>
     <style>
       body {
-        margin: 0;
-        padding: 0;
-        font-family: "Noto Sans KR", Arial, sans-serif;
-        background: #f7f7fa;
-        overflow-x: hidden;
-      }
+  margin: 0;
+  padding: 0px 32px 32px 32px;
+  font-family: "Noto Sans KR", Arial, sans-serif;
+  background: #f7f7fa;
+  overflow-x: hidden;
+}
+
+/* 수직 여백 추가 */
+.container {
+  margin: 40px 0;
+}
+.left-map {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+.right-panel {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+.custom-recommendation {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+.facility-table {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+.ranking-container {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+.explanation {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
       .header {
-        width: 100%;
+        width: 100vw;
+        margin-left: calc(-1 * (32px));
+        margin-right: calc(-1 * (32px));
         background: #3b82f6;
         color: #fff;
         font-size: 2rem;
@@ -24,31 +56,32 @@
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
       }
       .container {
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        height: calc(100vh - 77px);
-        min-height: 500px;
-      }
-      .left-map {
-        width: 50%;
-        min-width: 320px;
-        height: 100%;
-      }
-      .map-iframe {
-        width: 100%;
-        height: 100%;
-        border: none;
-        display: block;
-      }
-      .right-panel {
-        width: 50%;
-        min-width: 320px;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        background: #f7f7fa;
-      }
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: calc(100vh - 77px);
+  min-height: 500px;
+}
+.left-map {
+  width: 50%;
+  min-width: 320px;
+  height: 100%;
+  margin-right: 24px; /* Add margin between columns */
+}
+.right-panel {
+  width: 50%;
+  min-width: 320px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #f7f7fa;
+}
+.map-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
       .right-top,
       .right-bottom {
         flex: 1;
@@ -62,34 +95,40 @@
         background: #f0f6ff;
       }
       @media (max-width: 900px) {
-        .container {
-          flex-direction: column;
-        }
-        .left-map,
-        .right-panel {
-          width: 100%;
-          min-width: 0;
-        }
-        .left-map {
-          height: 50%;
-        }
-        .right-panel {
-          height: 50%;
-          flex-direction: row;
-        }
-        .right-top,
-        .right-bottom {
-          flex: 1;
-          padding: 1rem;
-          border-bottom: none;
-          border-right: 1px solid #e5e7eb;
-        }
-        .right-bottom {
-          border-right: none;
-        }
-      }
+  .container {
+    flex-direction: column;
+  }
+  .left-map,
+  .right-panel {
+    width: 100%;
+    min-width: 0;
+    margin-right: 0 !important;
+  }
+  .left-map {
+    height: 50%;
+  }
+  .right-panel {
+    height: 50%;
+    flex-direction: row;
+  }
+  .right-top,
+  .right-bottom {
+    flex: 1;
+    padding: 1rem;
+    border-bottom: none;
+    border-right: 1px solid #e5e7eb;
+  }
+  .right-bottom {
+    border-right: none;
+  }
+}
     </style>
-  </head>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+</head>
   <body>
     <div class="header">부산에서 강아지 키우기 좋은 동네</div>
     <div class="container">
@@ -101,6 +140,204 @@
       </div>
       <div class="right-panel">
         <div class="right-top">
+
+    <div class="custom-recommendation">
+        <h3>🎯 맞춤형 동네 추천</h3>
+        <p>각 시설의 중요도를 조절하여 나에게 맞는 동네를 찾아보세요.</p>
+        
+        <div class="weight-sliders">
+            <div class="slider-container">
+                <label>🏥 동물병원 중요도: <span id="hospital-weight-value">5</span></label>
+                <input type="range" id="hospital-weight" min="0" max="10" value="5" step="0.5" class="weight-slider">
+            </div>
+            
+            <div class="slider-container">
+                <label>☕ 애견카페 중요도: <span id="cafe-weight-value">5</span></label>
+                <input type="range" id="cafe-weight" min="0" max="10" value="5" step="0.5" class="weight-slider">
+            </div>
+            
+            <div class="slider-container">
+                <label>🌳 공원 중요도: <span id="park-weight-value">5</span></label>
+                <input type="range" id="park-weight" min="0" max="10" value="5" step="0.5" class="weight-slider">
+            </div>
+        </div>
+        
+        
+        <div class="ranking-container">
+            <h4>맞춤 추천 순위</h4>
+            <ol id="ranking-list">
+                <!-- 순위는 JavaScript로 동적 생성 -->
+            </ol>
+        </div>
+        
+        <div class="explanation">
+            <small>※ 각 시설 점수는 (시설 수) × (중요도)로 계산되며, 점수가 높은 행정동이 우선적으로 추천됩니다.</small>
+            <small>※ 부산 전체에는 동물병원 447개, 애견카페 67개, 공원 1719개가 있습니다.</small>
+        </div>
+    </div>
+
+    <style>
+        .custom-recommendation {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .weight-sliders {
+            margin: 20px 0;
+        }
+        
+        .slider-container {
+            margin-bottom: 15px;
+        }
+        
+        .weight-slider {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            background: #f0f0f0;
+            outline: none;
+            border-radius: 5px;
+        }
+        
+        .weight-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #4285f4;
+            cursor: pointer;
+        }
+        
+        .chart-container {
+            margin: 20px 0;
+            height: 300px;
+            position: relative;
+        }
+        
+        .ranking-container {
+            margin-top: 20px;
+        }
+        
+        #ranking-list li {
+            margin-bottom: 5px;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        
+        #ranking-list li:nth-child(1) {
+            background-color: #fff6e6;
+            font-weight: bold;
+        }
+        
+        #ranking-list li:nth-child(2), #ranking-list li:nth-child(3) {
+            background-color: #f9f9fb;
+        }
+        
+        .explanation {
+            margin-top: 15px;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .explanation small {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+    
+</div>
+            
+
+        </div>
+        
+
+        
+    </div>
+
+    <style>
+        .custom-recommendation {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .weight-sliders {
+            margin: 20px 0;
+        }
+        
+        .slider-container {
+            margin-bottom: 15px;
+        }
+        
+        .weight-slider {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            background: #f0f0f0;
+            outline: none;
+            border-radius: 5px;
+        }
+        
+        .weight-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #4285f4;
+            cursor: pointer;
+        }
+        
+        .chart-container {
+            margin: 20px 0;
+            height: 300px;
+            position: relative;
+        }
+        
+        .ranking-container {
+            margin-top: 20px;
+        }
+        
+        #ranking-list li {
+            margin-bottom: 5px;
+            padding: 8px;
+            border-radius: 4px;
+        }
+        
+        #ranking-list li:nth-child(1) {
+            background-color: #fff6e6;
+            font-weight: bold;
+        }
+        
+        #ranking-list li:nth-child(2), #ranking-list li:nth-child(3) {
+            background-color: #f9f9fb;
+        }
+        
+        .explanation {
+            margin-top: 15px;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .explanation small {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+    
+
+    
+</div>
+    
+    
+    
+    
+</div>
+    
 
     <style>
         .rank-table {
@@ -128,6 +365,32 @@
         .top-rank {
             background-color: #f9f9fb;
             font-weight: bold;
+        }
+        .facilities-tables {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .facility-table {
+            flex: 1;
+            min-width: 200px;
+        }
+        .facility-table h4 {
+            margin-top: 0;
+            color: #334155;
+            font-size: 1rem;
+        }
+        .data-methodology {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 4px solid #10b981;
+        }
+        .data-methodology h3 {
+            margin-top: 0;
+            color: #10b981;
         }
         .recommendation {
             background-color: #f0f8ff;
@@ -185,158 +448,284 @@
         }
     </style>
     
-    <h3>🏆 강아지 키우기 좋은 동네 TOP 10</h3>
-    <div class="info-text">
-        <p><em>동물병원(2점), 애견카페(1.5점), 공원(1점) 가중치 적용</em></p>
-    </div>
-    <table class="rank-table">
-        <thead>
-            <tr>
-                <th>순위</th>
-                <th>행정동</th>
-                <th>점수</th>
-                <th>동물병원</th>
-                <th>애견카페</th>
-                <th>공원</th>
-            </tr>
-        </thead>
-        <tbody>
     
-            <tr class="first-rank">
-                <td>1</td>
-                <td>좌2동</td>
-                <td>35.5</td>
-                <td>17</td>
-                <td>1</td>
-                <td>0</td>
-            </tr>
-        
-            <tr class="top-rank">
-                <td>2</td>
-                <td>양정1동</td>
-                <td>28.0</td>
-                <td>14</td>
-                <td>0</td>
-                <td>0</td>
-            </tr>
-        
-            <tr class="top-rank">
-                <td>3</td>
-                <td>구서1동</td>
-                <td>22.0</td>
-                <td>11</td>
-                <td>0</td>
-                <td>0</td>
-            </tr>
-        
-            <tr class="">
-                <td>4</td>
-                <td>우3동</td>
-                <td>22.0</td>
-                <td>11</td>
-                <td>0</td>
-                <td>0</td>
-            </tr>
-        
-            <tr class="">
-                <td>5</td>
-                <td>중1동</td>
-                <td>22.0</td>
-                <td>11</td>
-                <td>0</td>
-                <td>0</td>
-            </tr>
-        
-            <tr class="">
-                <td>6</td>
-                <td>장전2동</td>
-                <td>20.0</td>
-                <td>10</td>
-                <td>0</td>
-                <td>0</td>
-            </tr>
-        
-            <tr class="">
-                <td>7</td>
-                <td>명지1동</td>
-                <td>18.5</td>
-                <td>7</td>
-                <td>3</td>
-                <td>0</td>
-            </tr>
-        
-            <tr class="">
-                <td>8</td>
-                <td>민락동</td>
-                <td>15.5</td>
-                <td>5</td>
-                <td>3</td>
-                <td>1</td>
-            </tr>
-        
-            <tr class="">
-                <td>9</td>
-                <td>남천1동</td>
-                <td>15.5</td>
-                <td>7</td>
-                <td>1</td>
-                <td>0</td>
-            </tr>
-        
-            <tr class="">
-                <td>10</td>
-                <td>기장읍</td>
-                <td>14.0</td>
-                <td>6</td>
-                <td>0</td>
-                <td>2</td>
-            </tr>
-        
-        </tbody>
-    </table>
     
-    <div class="recommendation">
-        <h4>💡 강아지와 함께 하기 좋은 동네는?</h4>
-        <p>
-            부산 내 <b>205</b>개 행정동 중, <b>139</b>개 동에 동물병원이 있으며,
-            <b>35</b>개 동에 애견카페, <b>37</b>개 동에 공원이 있습니다.
-        </p>
-        <p>
-            <b>좌2동</b>은(는) 동물병원이 <b>17개</b>로 
-            부산에서 가장 많은 동물 의료 인프라를 갖추고 있으며,
-            <b>좌2동</b>은(는) 
-            애견카페가 <b>1개</b>로 
-            반려견과 함께 즐길 수 있는 공간이 가장 많습니다.
-        </p>
-    </div>
-    
-</div>
-        <div class="right-bottom">
+    <h3>📊 시설별 상위 행정동</h3>
+    <div class="facilities-tables">
+        <div class="facility-table">
+            <h4>🏥 동물병원 TOP 5</h4>
+            <table class="rank-table">
+                <thead>
+                    <tr>
+                        <th>순위</th>
+                        <th>행정동</th>
+                        <th>개수</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-    <h3>🗺 지도 사용법</h3>
-    <ul class="guide-list">
-        <li>
-            <b>레이어 선택:</b> 왼쪽 상단의 레이어 컨트롤에서 원하는 정보 레이어를 켜고 끌 수 있습니다.
-        </li>
-        <li>
-            <b>행정동 확인:</b> 행정동 경계에 마우스를 올리면 행정동 이름이 표시됩니다. 
-        </li>
-        <li>
-            <b>시설 정보:</b> 각 마커를 클릭하면 시설명, 주소, 연락처 등 상세 정보가 표시됩니다.
-        </li>
-        <li>
-            <b>지도 확대/축소:</b> 스크롤이나 +/- 버튼으로 확대/축소가 가능합니다.
-        </li>
-    </ul>
-    <div class="legend">
-        <h4>범례</h4>
-        <div class="legend-item"><span class="marker red"></span> 동물병원</div>
-        <div class="legend-item"><span class="marker blue"></span> 애견카페</div>
-        <div class="legend-item"><span class="marker green"></span> 공원</div>
+                    <tr class="first-rank">
+                        <td>1</td>
+                        <td>좌2동</td>
+                        <td>17</td>
+                    </tr>
+        
+                    <tr class="">
+                        <td>2</td>
+                        <td>양정1동</td>
+                        <td>14</td>
+                    </tr>
+        
+                    <tr class="">
+                        <td>3</td>
+                        <td>구서1동</td>
+                        <td>11</td>
+                    </tr>
+        
+                    <tr class="">
+                        <td>4</td>
+                        <td>우3동</td>
+                        <td>11</td>
+                    </tr>
+        
+                    <tr class="">
+                        <td>5</td>
+                        <td>중1동</td>
+                        <td>11</td>
+                    </tr>
+        
+                </tbody>
+            </table>
+        </div>
+        <div class="facility-table">
+            <h4>☕ 애견카페 TOP 5</h4>
+            <table class="rank-table">
+                <thead>
+                    <tr>
+                        <th>순위</th>
+                        <th>행정동</th>
+                        <th>개수</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr class="first-rank">
+                        <td>1</td>
+                        <td>민락동</td>
+                        <td>4</td>
+                    </tr>
+        
+                    <tr class="">
+                        <td>2</td>
+                        <td>정관읍</td>
+                        <td>3</td>
+                    </tr>
+        
+                    <tr class="">
+                        <td>3</td>
+                        <td>명지1동</td>
+                        <td>3</td>
+                    </tr>
+        
+                    <tr class="">
+                        <td>4</td>
+                        <td>부전2동</td>
+                        <td>3</td>
+                    </tr>
+        
+                    <tr class="">
+                        <td>5</td>
+                        <td>다대2동</td>
+                        <td>3</td>
+                    </tr>
+        
+                </tbody>
+            </table>
+        </div>
+        <div class="facility-table">
+            <h4>🌳 공원 TOP 5</h4>
+            <table class="rank-table">
+                <thead>
+                    <tr>
+                        <th>순위</th>
+                        <th>행정동</th>
+                        <th>개수</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <tr class="first-rank">
+                        <td>1</td>
+                        <td>녹산동</td>
+                        <td>89</td>
+                    </tr>
+        
+                    <tr class="">
+                        <td>2</td>
+                        <td>삼락동</td>
+                        <td>74</td>
+                    </tr>
+        
+                    <tr class="">
+                        <td>3</td>
+                        <td>정관읍</td>
+                        <td>67</td>
+                    </tr>
+        
+                    <tr class="">
+                        <td>4</td>
+                        <td>기장읍</td>
+                        <td>64</td>
+                    </tr>
+        
+                    <tr class="">
+                        <td>5</td>
+                        <td>부전1동</td>
+                        <td>54</td>
+                    </tr>
+        
+                </tbody>
+            </table>
+        </div>
     </div>
     
+
+    
 </div>
+
+
       </div>
     </div>
+  <!-- Kakao 장소 필터링을 위한 스크립트 추가 -->  
+  <script>
+    // 걸을 수 있는 장소 카테고리
+    const FILTER_CATEGORIES = [
+      '도보여행',
+      '둘레길',
+      '하천',
+      '공원',
+      '산책로',
+      '산책길',
+      '산',
+      '등산',
+      '동산',
+      '수목원',
+      '생태공원',
+      '자연공원',
+      '마을공원',
+      '강변공원',
+    ];
+
+    // 공원으로 간주되는 카테고리 키워드
+    const PARK_KEYWORDS = [
+      '공원',
+      '수목원',
+      '생태공원',
+      '자연공원',
+      '마을공원',
+    ];
+
+    // 공원으로 필터링 할 때 제외할 장소 키워드
+    const PARK_EXCLUSION_KEYWORDS = [
+      '화장실',
+      '주차장',
+      '관리소',
+      '매표소',
+      '사무소',
+      '센터',
+      '안내소',
+      '관리실',
+      '관리단',
+      '관광안내소',
+    ];
+
+    /**
+     * 카테고리 기반 장소 필터링
+     * @param {Array} places - 카카오 장소 검색 결과
+     * @returns {Array} - 필터링된 장소 목록
+     */
+    function filterPlacesByCategory(places) {
+      return places.filter((place) => {
+        const categories = place.category_name.split(` > `);
+        return FILTER_CATEGORIES.some((keyword) => categories.includes(keyword));
+      });
+    }
+
+    /**
+     * 엄격한 필터링 - 여행 > 관광,명소 카테고리에 속한 장소만 필터링
+     * @param {Array} places - 카카오 장소 검색 결과
+     * @returns {Array} - 필터링된 장소 목록
+     */
+    function filterPlacesStrict(places) {
+      return places.filter((place) => {
+        const categories = place.category_name.split(` > `);
+        // 여행 > 관광,명소 카테고리에 속하는지 확인
+        const isValidPath =
+          categories[0] === '여행' && categories[1] === '관광,명소';
+        if (!isValidPath) return false;
+
+        // 필터링 카테고리에 속하는지 확인
+        return FILTER_CATEGORIES.some((keyword) => categories.includes(keyword));
+      });
+    }
+
+    /**
+     * 공원만 필터링하고 불필요한 장소(화장실, 주차장 등) 제외
+     * @param {Array} places - 카카오 장소 검색 결과
+     * @returns {Array} - 필터링된 장소 목록
+     */
+    function filterParkOnly(places) {
+      return places.filter((place) => {
+        const categories = place.category_name.split(` > `);
+        const placeName = place.place_name || '';
+        
+        // 공원 키워드를 포함하는지 확인
+        const isPark = PARK_KEYWORDS.some((keyword) =>
+          categories.includes(keyword) || placeName.includes(keyword)
+        );
+        
+        if (!isPark) return false;
+        
+        // 제외할 키워드가 포함되어 있는지 확인
+        const hasExclusionKeyword = PARK_EXCLUSION_KEYWORDS.some((keyword) =>
+          placeName.includes(keyword)
+        );
+        
+        return isPark && !hasExclusionKeyword;
+      });
+    }
+
+    /**
+     * 카카오 키워드 검색 수행 후 결과 필터링
+     * @param {Object} placesService - 카카오 장소 검색 서비스 객체
+     * @param {string} keyword - 검색 키워드
+     * @param {function} callback - 결과를 처리할 콜백 함수
+     * @param {function} filterFn - 필터링 함수 (기본값: filterParkOnly)
+     */
+    function searchAndFilterPlaces(
+      placesService,
+      keyword,
+      callback,
+      filterFn = filterParkOnly
+    ) {
+      placesService.keywordSearch(keyword, (result, status) => {
+        if (status === kakao.maps.services.Status.OK) {
+          // 결과 필터링
+          const filteredPlaces = filterFn(result);
+          callback(filteredPlaces);
+        } else {
+          callback([]);
+        }
+      });
+    }
+
+    // 페이지 로드 시 실행: 이 HTML이 정적 데이터만 가지고 있기 때문에 
+    // 필터링을 적용할 후속 구현을 위한 시작점으로 사용할 수 있습니다.
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('카카오 장소 필터링 기능이 준비되었습니다.');
+      console.log('filterParkOnly, filterPlacesByCategory, filterPlacesStrict 함수를 사용할 수 있습니다.');
+      console.log('searchAndFilterPlaces 함수를 통해 검색과 필터링을 한 번에 수행할 수 있습니다.');
+    });
+  </script>
   </body>
 </html>
