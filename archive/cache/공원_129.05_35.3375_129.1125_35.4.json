@@ -1,0 +1,44 @@
+[
+  {
+    "address_name": "경남 양산시 호계동 1118",
+    "category_group_code": "",
+    "category_group_name": "",
+    "category_name": "여행 > 공원",
+    "distance": "",
+    "id": "1899331203",
+    "phone": "",
+    "place_name": "범실근린공원",
+    "place_url": "http://place.map.kakao.com/1899331203",
+    "road_address_name": "",
+    "x": "129.067632590811",
+    "y": "35.36671724374"
+  },
+  {
+    "address_name": "경남 양산시 상북면 대석리 1125-5",
+    "category_group_code": "",
+    "category_group_name": "",
+    "category_name": "여행 > 공원",
+    "distance": "",
+    "id": "1516659916",
+    "phone": "",
+    "place_name": "당산공원",
+    "place_url": "http://place.map.kakao.com/1516659916",
+    "road_address_name": "",
+    "x": "129.065026865293",
+    "y": "35.3900020247388"
+  },
+  {
+    "address_name": "경남 양산시 호계동 665",
+    "category_group_code": "",
+    "category_group_name": "",
+    "category_name": "스포츠,레저 > 축구 > 축구장",
+    "distance": "",
+    "id": "418117087",
+    "phone": "",
+    "place_name": "삼성체육공원",
+    "place_url": "http://place.map.kakao.com/418117087",
+    "road_address_name": "",
+    "x": "129.069701941254",
+    "y": "35.3684840714573"
+  }
+]

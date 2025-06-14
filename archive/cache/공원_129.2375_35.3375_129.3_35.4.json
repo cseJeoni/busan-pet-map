@@ -1,0 +1,58 @@
+[
+  {
+    "address_name": "부산 기장군 장안읍 장안리 697",
+    "category_group_code": "",
+    "category_group_name": "",
+    "category_name": "여행 > 공원 > 도시근린공원",
+    "distance": "",
+    "id": "175092988",
+    "phone": "",
+    "place_name": "명례공원",
+    "place_url": "http://place.map.kakao.com/175092988",
+    "road_address_name": "",
+    "x": "129.253416513353",
+    "y": "35.3663048268133"
+  },
+  {
+    "address_name": "부산 기장군 장안읍 기룡리 509-3",
+    "category_group_code": "",
+    "category_group_name": "",
+    "category_name": "여행 > 공원 > 도시근린공원",
+    "distance": "",
+    "id": "866056456",
+    "phone": "",
+    "place_name": "장안신기솔밭쌈지공원",
+    "place_url": "http://place.map.kakao.com/866056456",
+    "road_address_name": "",
+    "x": "129.252115211477",
+    "y": "35.3508662520528"
+  },
+  {
+    "address_name": "부산 기장군 장안읍 장안리 295-1",
+    "category_group_code": "",
+    "category_group_name": "",
+    "category_name": "여행 > 공원",
+    "distance": "",
+    "id": "26857225",
+    "phone": "",
+    "place_name": "하장안마을 연꽃단지",
+    "place_url": "http://place.map.kakao.com/26857225",
+    "road_address_name": "",
+    "x": "129.248462737403",
+    "y": "35.3644760028137"
+  },
+  {
+    "address_name": "부산 기장군 장안읍 길천리 467-1",
+    "category_group_code": "",
+    "category_group_name": "",
+    "category_name": "여행 > 공원",
+    "distance": "",
+    "id": "415547092",
+    "phone": "",
+    "place_name": "고리동산",
+    "place_url": "http://place.map.kakao.com/415547092",
+    "road_address_name": "",
+    "x": "129.280371134263",
+    "y": "35.3389914254022"
+  }
+]

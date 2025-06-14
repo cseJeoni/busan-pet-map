@@ -234,53 +234,28 @@ for _, row in df.iterrows():
 hospital_group.add_to(m)
 
 # 9. 통합 데이터(CSV)에서 모든 시설 정보 불러오기
+# 필터링이 적용된 시설 데이터 로드 (단일 파일에서 모든 시설 정보 로드)
 try:
-    # 공원 데이터 로드 (강력 필터링된 파일 우선 사용, 없으면 원시 데이터에 필터 적용)
-    strict_filtered_park_file = 'data/busan_parks_strict_filtered.json'
-    raw_park_file = 'data/busan_parks_all.json'
-    parks_data = [] # 최종적으로 사용할 공원 데이터 리스트
-
-    if os.path.exists(strict_filtered_park_file):
-        print(f"'{strict_filtered_park_file}' (강력 필터링된 공원 데이터) 사용 중...")
-        with open(strict_filtered_park_file, 'r', encoding='utf-8') as f:
-            parks_data = json.load(f)
-        print(f"로드된 강력 필터링 공원 데이터: {len(parks_data)}개")
-    elif os.path.exists(raw_park_file):
-        print(f"'{raw_park_file}' (원시 공원 데이터) 사용 중. 강력 필터링 적용...")
-        with open(raw_park_file, 'r', encoding='utf-8') as f:
-            raw_parks_list = json.load(f) # 원시 데이터 로드
-        print(f"원시 공원 데이터 {len(raw_parks_list)}개에 대해 강력 필터링 적용 중...")
-        parks_data = filter_park_only(raw_parks_list, strict_category=True)
-        print(f"강력 필터링 후 공원 데이터: {len(parks_data)}개 (원래 {len(raw_parks_list)}개)")
+    facilities_file = 'output/facilities_with_district_filtered.csv'
+    
+    if os.path.exists(facilities_file):
+        facilities_df = pd.read_csv(facilities_file)
+        print(f"필터링된 통합 시설 데이터 로드: {len(facilities_df)}개")
+        print(f"시설 유형별 개수:\n{facilities_df['type'].value_counts()}")
     else:
-        print(f"경고: 공원 데이터 파일({strict_filtered_park_file} 또는 {raw_park_file})을 찾을 수 없습니다.")
-        parks_data = []  # 공원 데이터를 데이터프레임으로 변환
-    parks_list = []
-    for park in parks_data:
-        # 필요한 정보만 추출
-        parks_list.append({
-            'name': park.get('place_name', ''),
-            'x': park.get('x', '0'),  # 경도
-            'y': park.get('y', '0'),  # 위도
-            'district': park.get('address_name', '').split(' ')[0] if park.get('address_name') else '',
-            'type': '공원'
-        })
+        print(f"오류: 필터링된 시설 데이터 파일({facilities_file})을 찾을 수 없습니다.")
+        facilities_df = pd.DataFrame()  # 빈 데이터프레임 생성
+    # 공원 데이터 필터링
+    parks_df = facilities_df[facilities_df['type'] == '공원'].copy()
+    print(f"공원 데이터: {len(parks_df)}개")
     
-    # 공원 데이터프레임 생성
-    parks_df = pd.DataFrame(parks_list)
-    print(f"로드된 공원 데이터 (필터링 전): {len(parks_df)}개")
-    
-    # 공원 데이터에도 부산 지역 좌표 필터링 적용
-    parks_df['x'] = parks_df['x'].astype(float)
-    parks_df['y'] = parks_df['y'].astype(float)
-    
-    # 부산시 행정구역명 리스트 활용한 필터링
+    # 행정동명에 부산 구/군이 포함된 데이터 필터링
     filtered_parks_district = []
     for district in parks_df['district']:
         is_busan = False
         if isinstance(district, str):
             for busan_district in busan_districts:
-                if busan_district in district or district.startswith('부산'):
+                if busan_district in district:
                     is_busan = True
                     break
         filtered_parks_district.append(is_busan)
@@ -294,66 +269,9 @@ try:
         filtered_parks_district
     ]
     
-    print(f"# 부산 지역으로 필터링된 공원 데이터: {len(parks_df)}개")
-    
-    # 공원 이름 중복 제거 (반복되는 기본 공원명으로 통합)
-    def extract_base_park_name(park_name):
-        """
-        공원 이름에서 기본 공원명 추출
-        예: '부산시민공원 동물유치원' -> '부산시민공원'
-        """
-        import re
-        # 공원, 공원 관련 시설, 공원 내 장소 간의 구분을 위한 범용 패턴
-        base_patterns = [
-            r'(.+?공원)[ ]?.*',  # '공원'(공원)으로 끝나는 모든 공원명
-            r'(.+?수목원)[ ]?.*',  # '수목원'(수목원)으로 끝나는 이름
-            r'(.+?공원로)[ ]?.*',  # '공원로'(공원로)로 끝나는 이름
-            r'(.+?박물관)[ ]?.*',  # '박물관'(박물관)으로 끝나는 이름
-        ]
+    print(f"부산 지역으로 필터링된 공원 데이터: {len(parks_df)}개")
         
-        for pattern in base_patterns:
-            match = re.match(pattern, park_name)
-            if match:
-                return match.group(1)
-        
-        # 패턴에 맞지 않는 경우, 처음 나오는 공백이나 특수문자를 기준으로 분할
-        words = park_name.split()
-        if len(words) > 1:
-            # 처음 두 단어만 사용 - 일반적인 공원은 두 단어 이하인 경우가 많음
-            if len(words) > 2 and len(words[0]) + len(words[1]) > 6:  # 기본적으로 두 단어만 가져가되, 너무 짧지 않을 경우
-                return words[0] + " " + words[1]
-            return words[0]  # 가장 간단한 경우는 첫번째 단어만 사용
-        
-        return park_name  # 분할할 수 없을 경우 원래 이름 그대로 반환
-    
-    # 같은 기본 공원명으로 그룹화
-    parks_df['base_park_name'] = parks_df['name'].apply(extract_base_park_name)
-    print(f"\n공원 기본명 추출 예시:")
-    sample_idx = parks_df.sample(5).index
-    for idx in sample_idx:
-        print(f"- 원래: {parks_df.loc[idx, 'name']}, 추출한 기본명: {parks_df.loc[idx, 'base_park_name']}")
-    
-    # 각 공원 그룹에서 대표 항목 선택
-    # 1. 기본 공원명으로 그룹화
-    # 2. 각 그룹에서 이름이 가장 짧은 항목을 대표로 선택 (일반적으로 기본 공원명)
-    parks_grouped = parks_df.groupby('base_park_name').first().reset_index()
-    
-    # 그룹화 결과 확인
-    print(f"\n같은 기본명 공원 그룹화 전: {len(parks_df)}개, 그룹화 후: {len(parks_grouped)}개")
-    
-    # 그룹화된 공원 데이터 사용
-    parks_df = parks_grouped
-    
-    # CSV 통합 데이터 로드 (애견카페 데이터용)
-    facilities_df = pd.read_csv('output/facilities_with_district.csv')
-    
-    # 애견카페 데이터만 추출
-    dog_cafes_df = facilities_df[facilities_df['type'] == '애견카페']
-    print(f"로드된 애견카페 데이터: {len(dog_cafes_df)}개")
-    
-    # 부산 지역 필터링을 위한 busan_districts는 이미 파일 상단에 정의되어 있음
-    
-    # 행정동명에 부산 구/군이 포함된 데이터 필터링
+    # 행정동명에 부산 구/군이 포함된 데이터 필터링 (모든 시설 대상)
     filtered_districts = []
     for district in facilities_df['district']:
         is_busan = False
@@ -366,8 +284,8 @@ try:
                 is_busan = True
         filtered_districts.append(is_busan)
     
-    
     # 애견카페 데이터만 facilities_df에서 필터링
+    # 애견카페 데이터 필터링 (좌표와 행정구역 기준)
     dog_cafes_df = facilities_df[
         (facilities_df['type'] == '애견카페') &
         (facilities_df['y'] >= busan_lat_min) & 
@@ -377,10 +295,14 @@ try:
         filtered_districts
     ]
     
+    # 동물병원 데이터 필터링 (직접적으로 사용하지는 않지만, 정보 표시용)
+    animal_hospitals_df = facilities_df[facilities_df['type'] == '동물병원']
+    
     print(f'부산 지역 데이터로 필터링 결과:')
+    print(f'- 동물병원: {len(animal_hospitals_df)}개')
     print(f'- 애견카페: {len(dog_cafes_df)}개')
     print(f'- 공원: {len(parks_df)}개')
-    print(f'- 총 시설: {len(dog_cafes_df) + len(parks_df)}개')
+    print(f'- 총 시설: {len(dog_cafes_df) + len(parks_df) + len(animal_hospitals_df)}개')
     
     # 애견카페 마커들을 FeatureGroup으로 묶음
     dog_cafe_group = folium.FeatureGroup(name='애견카페', show=False)

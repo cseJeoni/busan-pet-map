@@ -1,0 +1,58 @@
+[
+  {
+    "address_name": "부산 강서구 대저1동 1330-7",
+    "category_group_code": "",
+    "category_group_name": "",
+    "category_name": "여행 > 공원",
+    "distance": "",
+    "id": "2109261754",
+    "phone": "",
+    "place_name": "서연정공원",
+    "place_url": "http://place.map.kakao.com/2109261754",
+    "road_address_name": "",
+    "x": "128.969702330002",
+    "y": "35.2163008214114"
+  },
+  {
+    "address_name": "부산 강서구 대저1동 606",
+    "category_group_code": "",
+    "category_group_name": "",
+    "category_name": "여행 > 공원",
+    "distance": "",
+    "id": "290925446",
+    "phone": "",
+    "place_name": "통일무궁화공원",
+    "place_url": "http://place.map.kakao.com/290925446",
+    "road_address_name": "",
+    "x": "128.97502304219097",
+    "y": "35.22062082895404"
+  },
+  {
+    "address_name": "부산 강서구 대저1동 2327-35",
+    "category_group_code": "SW8",
+    "category_group_name": "지하철역",
+    "category_name": "교통,수송 > 지하철,전철 > 부산3호선",
+    "distance": "",
+    "id": "21161080",
+    "phone": "1544-5005",
+    "place_name": "체육공원역 부산3호선",
+    "place_url": "http://place.map.kakao.com/21161080",
+    "road_address_name": "부산 강서구 낙동북로 371",
+    "x": "128.969425373083",
+    "y": "35.2124735466918"
+  },
+  {
+    "address_name": "부산 강서구 대저1동 1439-13",
+    "category_group_code": "FD6",
+    "category_group_name": "음식점",
+    "category_name": "음식점 > 한식 > 설렁탕",
+    "distance": "",
+    "id": "477064099",
+    "phone": "051-831-3360",
+    "place_name": "부산진명가설렁탕 체육공원점",
+    "place_url": "http://place.map.kakao.com/477064099",
+    "road_address_name": "부산 강서구 대저로 137",
+    "x": "128.96776419494196",
+    "y": "35.21539242787768"
+  }
+]

@@ -1,0 +1,72 @@
+[
+  {
+    "address_name": "경남 양산시 원동면 서룡리 586-10",
+    "category_group_code": "",
+    "category_group_name": "",
+    "category_name": "여행 > 공원",
+    "distance": "",
+    "id": "393021292",
+    "phone": "",
+    "place_name": "서룡공원",
+    "place_url": "http://place.map.kakao.com/393021292",
+    "road_address_name": "",
+    "x": "128.956018445921",
+    "y": "35.3377746254671"
+  },
+  {
+    "address_name": "경남 양산시 원동면 원리 산 106-1",
+    "category_group_code": "",
+    "category_group_name": "",
+    "category_name": "여행 > 공원",
+    "distance": "",
+    "id": "112928578",
+    "phone": "",
+    "place_name": "매화공원",
+    "place_url": "http://place.map.kakao.com/112928578",
+    "road_address_name": "",
+    "x": "128.926473133925",
+    "y": "35.3586497419473"
+  },
+  {
+    "address_name": "경남 김해시 상동면 감노리 115-11",
+    "category_group_code": "",
+    "category_group_name": "",
+    "category_name": "여행 > 공원",
+    "distance": "",
+    "id": "628925585",
+    "phone": "",
+    "place_name": "상동화현강변공원",
+    "place_url": "http://place.map.kakao.com/628925585",
+    "road_address_name": "",
+    "x": "128.933603652609",
+    "y": "35.3413957625641"
+  },
+  {
+    "address_name": "경남 김해시 상동면 감노리 116-62",
+    "category_group_code": "",
+    "category_group_name": "",
+    "category_name": "가정,생활 > 화장실",
+    "distance": "",
+    "id": "836577994",
+    "phone": "",
+    "place_name": "화현생태공원 공중화장실",
+    "place_url": "http://place.map.kakao.com/836577994",
+    "road_address_name": "경남 김해시 상동면 동북로 938",
+    "x": "128.934026529925",
+    "y": "35.3402192877185"
+  },
+  {
+    "address_name": "경남 김해시 상동면 감노리 263-133",
+    "category_group_code": "",
+    "category_group_name": "",
+    "category_name": "가정,생활 > 화장실",
+    "distance": "",
+    "id": "834934913",
+    "phone": "",
+    "place_name": "감노강변공원 공중화장실",
+    "place_url": "http://place.map.kakao.com/834934913",
+    "road_address_name": "",
+    "x": "128.926526781059",
+    "y": "35.3476655355222"
+  }
+]
