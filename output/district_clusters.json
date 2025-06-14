@@ -1,0 +1,602 @@
+[
+  {
+    "district": "좌2동",
+    "cluster": 0
+  },
+  {
+    "district": "양정1동",
+    "cluster": 1
+  },
+  {
+    "district": "구서1동",
+    "cluster": 1
+  },
+  {
+    "district": "중1동",
+    "cluster": 1
+  },
+  {
+    "district": "우3동",
+    "cluster": 1
+  },
+  {
+    "district": "장전2동",
+    "cluster": 1
+  },
+  {
+    "district": "명지1동",
+    "cluster": 0
+  },
+  {
+    "district": "민락동",
+    "cluster": 0
+  },
+  {
+    "district": "정관읍",
+    "cluster": 0
+  },
+  {
+    "district": "남천1동",
+    "cluster": 1
+  },
+  {
+    "district": "좌1동",
+    "cluster": 1
+  },
+  {
+    "district": "남포동",
+    "cluster": 1
+  },
+  {
+    "district": "용호1동",
+    "cluster": 1
+  },
+  {
+    "district": "온천2동",
+    "cluster": 1
+  },
+  {
+    "district": "우1동",
+    "cluster": 1
+  },
+  {
+    "district": "온천3동",
+    "cluster": 1
+  },
+  {
+    "district": "망미1동",
+    "cluster": 1
+  },
+  {
+    "district": "일광읍",
+    "cluster": 0
+  },
+  {
+    "district": "대연3동",
+    "cluster": 0
+  },
+  {
+    "district": "전포2동",
+    "cluster": 1
+  },
+  {
+    "district": "연산9동",
+    "cluster": 1
+  },
+  {
+    "district": "다대2동",
+    "cluster": 2
+  },
+  {
+    "district": "부곡3동",
+    "cluster": 1
+  },
+  {
+    "district": "연산2동",
+    "cluster": 1
+  },
+  {
+    "district": "녹산동",
+    "cluster": 1
+  },
+  {
+    "district": "부전2동",
+    "cluster": 3
+  },
+  {
+    "district": "우2동",
+    "cluster": 1
+  },
+  {
+    "district": "화명3동",
+    "cluster": 0
+  },
+  {
+    "district": "기장읍",
+    "cluster": 1
+  },
+  {
+    "district": "광안2동",
+    "cluster": 1
+  },
+  {
+    "district": "온천1동",
+    "cluster": 1
+  },
+  {
+    "district": "연지동",
+    "cluster": 1
+  },
+  {
+    "district": "초읍동",
+    "cluster": 1
+  },
+  {
+    "district": "재송1동",
+    "cluster": 1
+  },
+  {
+    "district": "전포1동",
+    "cluster": 2
+  },
+  {
+    "district": "반여1동",
+    "cluster": 1
+  },
+  {
+    "district": "명륜동",
+    "cluster": 1
+  },
+  {
+    "district": "연산5동",
+    "cluster": 1
+  },
+  {
+    "district": "화명1동",
+    "cluster": 1
+  },
+  {
+    "district": "다대1동",
+    "cluster": 0
+  },
+  {
+    "district": "연산1동",
+    "cluster": 1
+  },
+  {
+    "district": "충무동",
+    "cluster": 1
+  },
+  {
+    "district": "사직2동",
+    "cluster": 1
+  },
+  {
+    "district": "안락2동",
+    "cluster": 3
+  },
+  {
+    "district": "모라1동",
+    "cluster": 1
+  },
+  {
+    "district": "명지2동",
+    "cluster": 1
+  },
+  {
+    "district": "남산동",
+    "cluster": 1
+  },
+  {
+    "district": "송정동",
+    "cluster": 1
+  },
+  {
+    "district": "장림2동",
+    "cluster": 1
+  },
+  {
+    "district": "당리동",
+    "cluster": 2
+  },
+  {
+    "district": "장안읍",
+    "cluster": 2
+  },
+  {
+    "district": "괘법동",
+    "cluster": 3
+  },
+  {
+    "district": "금곡동",
+    "cluster": 1
+  },
+  {
+    "district": "괴정3동",
+    "cluster": 1
+  },
+  {
+    "district": "중2동",
+    "cluster": 3
+  },
+  {
+    "district": "수민동",
+    "cluster": 1
+  },
+  {
+    "district": "당감4동",
+    "cluster": 4
+  },
+  {
+    "district": "구포1동",
+    "cluster": 3
+  },
+  {
+    "district": "부곡2동",
+    "cluster": 3
+  },
+  {
+    "district": "연산4동",
+    "cluster": 3
+  },
+  {
+    "district": "화명2동",
+    "cluster": 2
+  },
+  {
+    "district": "엄궁동",
+    "cluster": 2
+  },
+  {
+    "district": "가야2동",
+    "cluster": 4
+  },
+  {
+    "district": "하단1동",
+    "cluster": 4
+  },
+  {
+    "district": "사직1동",
+    "cluster": 4
+  },
+  {
+    "district": "구포2동",
+    "cluster": 4
+  },
+  {
+    "district": "안락1동",
+    "cluster": 4
+  },
+  {
+    "district": "수영동",
+    "cluster": 2
+  },
+  {
+    "district": "연산6동",
+    "cluster": 4
+  },
+  {
+    "district": "문현2동",
+    "cluster": 4
+  },
+  {
+    "district": "만덕3동",
+    "cluster": 4
+  },
+  {
+    "district": "문현3동",
+    "cluster": 4
+  },
+  {
+    "district": "광안1동",
+    "cluster": 4
+  },
+  {
+    "district": "거제3동",
+    "cluster": 3
+  },
+  {
+    "district": "거제2동",
+    "cluster": 4
+  },
+  {
+    "district": "장전1동",
+    "cluster": 4
+  },
+  {
+    "district": "개금1동",
+    "cluster": 4
+  },
+  {
+    "district": "덕천2동",
+    "cluster": 4
+  },
+  {
+    "district": "거제1동",
+    "cluster": 4
+  },
+  {
+    "district": "덕천1동",
+    "cluster": 2
+  },
+  {
+    "district": "용호3동",
+    "cluster": 3
+  },
+  {
+    "district": "주례2동",
+    "cluster": 4
+  },
+  {
+    "district": "용호2동",
+    "cluster": 4
+  },
+  {
+    "district": "암남동",
+    "cluster": 2
+  },
+  {
+    "district": "하단2동",
+    "cluster": 2
+  },
+  {
+    "district": "초량2동",
+    "cluster": 4
+  },
+  {
+    "district": "신평2동",
+    "cluster": 4
+  },
+  {
+    "district": "청룡노포동",
+    "cluster": 3
+  },
+  {
+    "district": "부암1동",
+    "cluster": 4
+  },
+  {
+    "district": "남항동",
+    "cluster": 4
+  },
+  {
+    "district": "강동동",
+    "cluster": 3
+  },
+  {
+    "district": "반송2동",
+    "cluster": 4
+  },
+  {
+    "district": "문현4동",
+    "cluster": 4
+  },
+  {
+    "district": "가락동",
+    "cluster": 3
+  },
+  {
+    "district": "부암3동",
+    "cluster": 4
+  },
+  {
+    "district": "구서2동",
+    "cluster": 4
+  },
+  {
+    "district": "광안4동",
+    "cluster": 4
+  },
+  {
+    "district": "서2동",
+    "cluster": 4
+  },
+  {
+    "district": "대연5동",
+    "cluster": 4
+  },
+  {
+    "district": "동삼1동",
+    "cluster": 2
+  },
+  {
+    "district": "가야1동",
+    "cluster": 4
+  },
+  {
+    "district": "당감1동",
+    "cluster": 3
+  },
+  {
+    "district": "주례3동",
+    "cluster": 4
+  },
+  {
+    "district": "대연1동",
+    "cluster": 4
+  },
+  {
+    "district": "좌4동",
+    "cluster": 4
+  },
+  {
+    "district": "주례1동",
+    "cluster": 4
+  },
+  {
+    "district": "괴정4동",
+    "cluster": 4
+  },
+  {
+    "district": "서대신3동",
+    "cluster": 4
+  },
+  {
+    "district": "광안3동",
+    "cluster": 3
+  },
+  {
+    "district": "괴정1동",
+    "cluster": 4
+  },
+  {
+    "district": "중앙동",
+    "cluster": 4
+  },
+  {
+    "district": "대연6동",
+    "cluster": 4
+  },
+  {
+    "district": "청학1동",
+    "cluster": 4
+  },
+  {
+    "district": "청학2동",
+    "cluster": 4
+  },
+  {
+    "district": "광복동",
+    "cluster": 2
+  },
+  {
+    "district": "초량3동",
+    "cluster": 4
+  },
+  {
+    "district": "개금3동",
+    "cluster": 2
+  },
+  {
+    "district": "감천1동",
+    "cluster": 2
+  },
+  {
+    "district": "감전동",
+    "cluster": 3
+  },
+  {
+    "district": "학장동",
+    "cluster": 4
+  },
+  {
+    "district": "감만2동",
+    "cluster": 4
+  },
+  {
+    "district": "재송2동",
+    "cluster": 4
+  },
+  {
+    "district": "만덕1동",
+    "cluster": 2
+  },
+  {
+    "district": "덕포1동",
+    "cluster": 4
+  },
+  {
+    "district": "복산동",
+    "cluster": 4
+  },
+  {
+    "district": "수정5동",
+    "cluster": 4
+  },
+  {
+    "district": "신평1동",
+    "cluster": 4
+  },
+  {
+    "district": "서대신1동",
+    "cluster": 4
+  },
+  {
+    "district": "서3동",
+    "cluster": 4
+  },
+  {
+    "district": "사직3동",
+    "cluster": 4
+  },
+  {
+    "district": "부평동",
+    "cluster": 3
+  },
+  {
+    "district": "양정2동",
+    "cluster": 4
+  },
+  {
+    "district": "부전1동",
+    "cluster": 2
+  },
+  {
+    "district": "부곡4동",
+    "cluster": 4
+  },
+  {
+    "district": "부곡1동",
+    "cluster": 4
+  },
+  {
+    "district": "봉래1동",
+    "cluster": 4
+  },
+  {
+    "district": "범천2동",
+    "cluster": 4
+  },
+  {
+    "district": "동대신2동",
+    "cluster": 4
+  },
+  {
+    "district": "영선1동",
+    "cluster": 4
+  },
+  {
+    "district": "범일1동",
+    "cluster": 4
+  },
+  {
+    "district": "반여4동",
+    "cluster": 4
+  },
+  {
+    "district": "반여2동",
+    "cluster": 4
+  },
+  {
+    "district": "반송1동",
+    "cluster": 2
+  },
+  {
+    "district": "명장2동",
+    "cluster": 4
+  },
+  {
+    "district": "명장1동",
+    "cluster": 4
+  },
+  {
+    "district": "망미2동",
+    "cluster": 3
+  },
+  {
+    "district": "만덕2동",
+    "cluster": 2
+  },
+  {
+    "district": "장림1동",
+    "cluster": 4
+  },
+  {
+    "district": "수정2동",
+    "cluster": 4
+  },
+  {
+    "district": "가덕도동",
+    "cluster": 3
+  }
+]

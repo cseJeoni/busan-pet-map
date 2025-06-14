@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>부산에서 강아지 키우기 좋은 동네</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-    <style>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>부산에서 강아지 키우기 좋은 동네</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<style>
       body {
         margin: 0;
         padding: 0px 32px 32px 32px;
@@ -343,109 +344,92 @@
         }
       }
     </style>
-  </head>
-  <body>
-    <div class="header">부산에서 강아지 키우기 좋은 동네</div>
-    <div class="container">
-      <div class="left-map">
-        <iframe
-          class="map-iframe"
-          src="./vet_hospitals_busan_map.html"
-        ></iframe>
-      </div>
-      <div class="right-panel">
-        <div class="right-top">
-
-    <div class="custom-recommendation">
-        <h3>🎯 맞춤형 동네 추천</h3>
-        <p>시설 우선순위를 선택하여 나에게 맞는 동네를 찾아보세요.</p>
-        
-        <div class="priority-selection">
-            <div class="priority-group">
-                <h4>🏥 동물병원</h4>
-                <div class="priority-buttons">
-                    <button class="priority-btn" data-facility="hospital" data-priority="1">1순위</button>
-                    <button class="priority-btn" data-facility="hospital" data-priority="2">2순위</button>
-                    <button class="priority-btn" data-facility="hospital" data-priority="3">3순위</button>
-                </div>
-            </div>
-            
-            <div class="priority-group">
-                <h4>☕ 애견카페</h4>
-                <div class="priority-buttons">
-                    <button class="priority-btn" data-facility="cafe" data-priority="1">1순위</button>
-                    <button class="priority-btn" data-facility="cafe" data-priority="2">2순위</button>
-                    <button class="priority-btn" data-facility="cafe" data-priority="3">3순위</button>
-                </div>
-            </div>
-            
-            <div class="priority-group">
-                <h4>🌳 공원</h4>
-                <div class="priority-buttons">
-                    <button class="priority-btn" data-facility="park" data-priority="1">1순위</button>
-                    <button class="priority-btn" data-facility="park" data-priority="2">2순위</button>
-                    <button class="priority-btn" data-facility="park" data-priority="3">3순위</button>
-                </div>
-            </div>
-            
-            <div class="action-buttons">
-                <button id="calculate-btn" class="action-btn" disabled>결과 계산하기</button>
-                <button id="reset-btn" class="action-btn">초기화</button>
-            </div>
-        </div>
-        
-        
-        <div class="ranking-container">
-            <h4>맞춤 추천 순위 (Top 3)</h4>
-            <ol id="ranking-list">
-                <!-- 순위는 JavaScript로 동적 생성 -->
-            </ol>
-        </div>
-        <div class="chart-container">
-            <canvas id="ranking-chart"></canvas>
-        </div>
-        
-        <div class="chart-explanation-container">
-            <div class="calculation-details">
-                <h4>TOP 3 동네 점수 계산 과정</h4>
-                <div id="calculation-explanation" class="score-details">
-                    <!-- 여기에 동적으로 계산 과정이 표시됩니다 -->
-                </div>
-            </div>
-            
-            <div class="explanation">
-                <h4>점수 계산 방식 설명</h4>
-                <p>현재 점수 계산은 정규화(Normalization)와 최소 요구사항 필터링을 적용한 방식입니다.</p>
-                
-                <h5>1. 정규화 적용</h5>
-                <p class="calc-detail">각 시설 유형(동물병원, 애견카페, 공원)별로 지역 간 비교를 공정하게 하기 위해 시설 수를 0~1 사이 값으로 정규화합니다.</p>
-                <ul class="guide-list">
-                    <li>정규화 공식: (해당 지역 시설 수 - 최소 시설 수) / (최대 시설 수 - 최소 시설 수)</li>
-                </ul>
-                
-                <h5>2. 최소 요구사항 필터링</h5>
-                <p class="calc-detail">1순위로 선택한 시설이 최소 1개 이상 있는 지역만 결과에 포함됩니다.</p>
-                <ul class="guide-list">
-                    <li>예: 애견카페를 1순위로 선택하면, 애견카페가 없는 지역은 아무리 다른 점수가 높아도 제외됩니다.</li>
-                </ul>
-                
-                <h5>3. 가중치 적용 및 최종 점수 계산</h5>
-                <p class="calc-detail">정규화된 시설 수에 우선순위별 가중치를 곱하여 최종 점수를 계산합니다.</p>
-                <ul class="guide-list">
-                    <li>1순위: 가중치 2.0점</li>
-                    <li>2순위: 가중치 1.5점</li>
-                    <li>3순위: 가중치 1.0점</li>
-                    <li>최종 점수 = (동물병원 정규화 점수 × 병원 가중치) + (애견카페 정규화 점수 × 카페 가중치) + (공원 정규화 점수 × 공원 가중치)</li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="small-note">
-            <small>※ 부산 전체에는 동물병원 447개, 애견카페 98개, 공원 1,229개(필터링 적용)가 있습니다.</small>
-        </div>
-    </div>
-
-    <style>
+</head>
+<body>
+<div class="header">부산에서 강아지 키우기 좋은 동네</div>
+<div class="container">
+<div class="left-map">
+<iframe class="map-iframe" src="./vet_hospitals_busan_map.html"></iframe>
+</div>
+<div class="right-panel">
+<div class="right-top">
+<div class="custom-recommendation">
+<h3>🎯 맞춤형 동네 추천</h3>
+<p>시설 우선순위를 선택하여 나에게 맞는 동네를 찾아보세요.</p>
+<div class="priority-selection">
+<div class="priority-group">
+<h4>🏥 동물병원</h4>
+<div class="priority-buttons">
+<button class="priority-btn" data-facility="hospital" data-priority="1">1순위</button>
+<button class="priority-btn" data-facility="hospital" data-priority="2">2순위</button>
+<button class="priority-btn" data-facility="hospital" data-priority="3">3순위</button>
+</div>
+</div>
+<div class="priority-group">
+<h4>☕ 애견카페</h4>
+<div class="priority-buttons">
+<button class="priority-btn" data-facility="cafe" data-priority="1">1순위</button>
+<button class="priority-btn" data-facility="cafe" data-priority="2">2순위</button>
+<button class="priority-btn" data-facility="cafe" data-priority="3">3순위</button>
+</div>
+</div>
+<div class="priority-group">
+<h4>🌳 공원</h4>
+<div class="priority-buttons">
+<button class="priority-btn" data-facility="park" data-priority="1">1순위</button>
+<button class="priority-btn" data-facility="park" data-priority="2">2순위</button>
+<button class="priority-btn" data-facility="park" data-priority="3">3순위</button>
+</div>
+</div>
+<div class="action-buttons">
+<button class="action-btn" disabled="" id="calculate-btn">결과 계산하기</button>
+<button class="action-btn" id="reset-btn">초기화</button>
+</div>
+</div>
+<div class="ranking-container">
+<h4>맞춤 추천 순위 (Top 3)</h4>
+<ol id="ranking-list">
+<!-- 순위는 JavaScript로 동적 생성 -->
+</ol>
+</div>
+<div class="chart-container">
+<canvas id="ranking-chart"></canvas>
+</div>
+<div class="chart-explanation-container">
+<div class="calculation-details">
+<h4>TOP 3 동네 점수 계산 과정</h4>
+<div class="score-details" id="calculation-explanation">
+<!-- 여기에 동적으로 계산 과정이 표시됩니다 -->
+</div>
+</div>
+<div class="explanation">
+<h4>점수 계산 방식 설명</h4>
+<p>현재 점수 계산은 정규화(Normalization)와 최소 요구사항 필터링을 적용한 방식입니다.</p>
+<h5>1. 정규화 적용</h5>
+<p class="calc-detail">각 시설 유형(동물병원, 애견카페, 공원)별로 지역 간 비교를 공정하게 하기 위해 시설 수를 0~1 사이 값으로 정규화합니다.</p>
+<ul class="guide-list">
+<li>정규화 공식: (해당 지역 시설 수 - 최소 시설 수) / (최대 시설 수 - 최소 시설 수)</li>
+</ul>
+<h5>2. 최소 요구사항 필터링</h5>
+<p class="calc-detail">1순위로 선택한 시설이 최소 1개 이상 있는 지역만 결과에 포함됩니다.</p>
+<ul class="guide-list">
+<li>예: 애견카페를 1순위로 선택하면, 애견카페가 없는 지역은 아무리 다른 점수가 높아도 제외됩니다.</li>
+</ul>
+<h5>3. 가중치 적용 및 최종 점수 계산</h5>
+<p class="calc-detail">정규화된 시설 수에 우선순위별 가중치를 곱하여 최종 점수를 계산합니다.</p>
+<ul class="guide-list">
+<li>1순위: 가중치 2.0점</li>
+<li>2순위: 가중치 1.5점</li>
+<li>3순위: 가중치 1.0점</li>
+<li>최종 점수 = (동물병원 정규화 점수 × 병원 가중치) + (애견카페 정규화 점수 × 카페 가중치) + (공원 정규화 점수 × 공원 가중치)</li>
+</ul>
+</div>
+</div>
+<div class="small-note">
+<small>※ 부산 전체에는 동물병원 447개, 애견카페 98개, 공원 1,229개(필터링 적용)가 있습니다. 행정동별 공원 수는 공간 매핑으로 확인한 정확한 값입니다.</small>
+</div>
+</div>
+<style>
         .custom-recommendation {
             background-color: white;
             padding: 15px;
@@ -518,17 +502,10 @@
             margin-bottom: 5px;
         }
     </style>
-    
 </div>
-            
-
-        </div>
-        
-
-        
-    </div>
-
-    <style>
+</div>
+</div>
+<style>
         .custom-recommendation {
             background-color: white;
             padding: 15px;
@@ -611,7 +588,6 @@
             margin-top: 1.5rem;
         }
     </style>
-</div>
 
 <script>
 // 행정동별 시설 데이터 (필터링된 데이터 기준, 공원 데이터 정확히 매핑)
@@ -1030,8 +1006,6 @@ function updateRankingChart(topDistricts) {
     });
 }
 </script>
-<style>
-        .legend {
             padding: 0.8rem;
             background: #f9f9fb;
             border-radius: 6px;
@@ -1062,114 +1036,459 @@ function updateRankingChart(topDistricts) {
             padding-bottom: 0.5rem;
             margin-top: 0;
         }
-    </style>
     
-
-    
+<h3>📊 시설별 상위 행정동</h3>
+<div class="facilities-tables">
+<div class="facility-table">
+<h4>🏥 동물병원 TOP 5</h4>
+<table class="rank-table">
+<thead>
+<tr>
+<th>순위</th>
+<th>행정동</th>
+<th>개수</th>
+</tr>
+</thead>
+<tbody>
+<tr class="first-rank">
+<td>1</td>
+<td>좌2동</td>
+<td>17</td>
+</tr>
+<tr class="">
+<td>2</td>
+<td>양정1동</td>
+<td>14</td>
+</tr>
+<tr class="">
+<td>3</td>
+<td>구서1동</td>
+<td>11</td>
+</tr>
+<tr class="">
+<td>4</td>
+<td>우3동</td>
+<td>11</td>
+</tr>
+<tr class="">
+<td>5</td>
+<td>중1동</td>
+<td>11</td>
+</tr>
+</tbody>
+</table>
 </div>
+<div class="facility-table">
+<h4>☕ 애견카페 TOP 5</h4>
+<table class="rank-table">
+<thead>
+<tr>
+<th>순위</th>
+<th>행정동</th>
+<th>개수</th>
+</tr>
+</thead>
+<tbody>
+<tr class="first-rank">
+<td>1</td>
+<td>민락동</td>
+<td>4</td>
+</tr>
+<tr class="">
+<td>2</td>
+<td>정관읍</td>
+<td>3</td>
+</tr>
+<tr class="">
+<td>3</td>
+<td>명지1동</td>
+<td>3</td>
+</tr>
+<tr class="">
+<td>4</td>
+<td>부전2동</td>
+<td>3</td>
+</tr>
+<tr class="">
+<td>5</td>
+<td>다대2동</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="facility-table">
+<h4>🌳 공원 TOP 5</h4>
+<table class="rank-table">
+<thead>
+<tr>
+<th>순위</th>
+<th>행정동</th>
+<th>개수</th>
+</tr>
+</thead>
+<tbody>
+<tr class="first-rank">
+<td>1</td>
+<td>녹산동</td>
+<td>89</td>
+</tr>
+<tr class="">
+<td>2</td>
+<td>삼락동</td>
+<td>74</td>
+</tr>
+<tr class="">
+<td>3</td>
+<td>정관읍</td>
+<td>67</td>
+</tr>
+<tr class="">
+<td>4</td>
+<td>기장읍</td>
+<td>64</td>
+</tr>
+<tr class="">
+<td>5</td>
+<td>부전1동</td>
+<td>54</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div><h3>🔬 클러스터링 분석</h3><div class="clustering-section">
+<div class="clustering-info">
+<p>부산시 행정동을 반려견 시설 특성에 따라 5개 클러스터로 분류했습니다.</p>
+</div>
+<div class="cluster-groups">
+<div class="cluster-group" style="border-left: 4px solid #FF5733;">
+<div class="cluster-header">
+<h4 style="color: #FF5733;">🏢 종합 인프라형 (8개 동네)</h4>
+<p class="cluster-desc">동물병원, 애견카페, 공원이 모두 잘 갖춰진 지역</p>
+</div>
+<div class="cluster-stats">
+<span class="stat-item">🏥 동물병원: 6.5개</span>
+<span class="stat-item">☕ 애견카페: 2.1개</span>
+<span class="stat-item">🌳 공원: 14.2개</span>
+</div>
+<div class="cluster-districts">
+<span class="district-tag">좌2동</span>
+<span class="district-tag">명지1동</span>
+<span class="district-tag">민락동</span>
+<span class="district-tag">정관읍</span>
+<span class="district-tag">일광읍</span>
+<span class="district-tag">대연3동</span>
+<span class="district-tag">화명3동</span>
+<span class="district-tag">다대1동</span>
+</div>
+</div>
+<div class="cluster-group" style="border-left: 4px solid #33FF57;">
+<div class="cluster-header">
+<h4 style="color: #33FF57;">🏥 의료 중심형 (40개 동네)</h4>
+<p class="cluster-desc">동물병원이 많이 집중된 지역</p>
+</div>
+<div class="cluster-stats">
+<span class="stat-item">🏥 동물병원: 5.8개</span>
+<span class="stat-item">☕ 애견카페: 0.3개</span>
+<span class="stat-item">🌳 공원: 6.8개</span>
+</div>
+<div class="cluster-districts">
+<span class="district-tag">양정1동</span>
+<span class="district-tag">구서1동</span>
+<span class="district-tag">중1동</span>
+<span class="district-tag">우3동</span>
+<span class="district-tag">장전2동</span>
+<span class="district-tag">남천1동</span>
+<span class="district-tag">좌1동</span>
+<span class="district-tag">남포동</span>
+<span class="district-tag-more">외 32개 동네</span>
+</div>
+</div>
+<div class="cluster-group" style="border-left: 4px solid #3357FF;">
+<div class="cluster-header">
+<h4 style="color: #3357FF;">🌳 여가 중심형 (18개 동네)</h4>
+<p class="cluster-desc">공원이 많아 산책하기 좋은 지역</p>
+</div>
+<div class="cluster-stats">
+<span class="stat-item">🏥 동물병원: 1.7개</span>
+<span class="stat-item">☕ 애견카페: 0.8개</span>
+<span class="stat-item">🌳 공원: 9.6개</span>
+</div>
+<div class="cluster-districts">
+<span class="district-tag">다대2동</span>
+<span class="district-tag">전포1동</span>
+<span class="district-tag">당리동</span>
+<span class="district-tag">장안읍</span>
+<span class="district-tag">화명2동</span>
+<span class="district-tag">엄궁동</span>
+<span class="district-tag">수영동</span>
+<span class="district-tag">덕천1동</span>
+<span class="district-tag-more">외 10개 동네</span>
+</div>
+</div>
+<div class="cluster-group" style="border-left: 4px solid #FF33A8;">
+<div class="cluster-header">
+<h4 style="color: #FF33A8;">☕ 카페 문화형 (18개 동네)</h4>
+<p class="cluster-desc">애견카페가 발달한 문화적 지역</p>
+</div>
+<div class="cluster-stats">
+<span class="stat-item">🏥 동물병원: 1.1개</span>
+<span class="stat-item">☕ 애견카페: 1.4개</span>
+<span class="stat-item">🌳 공원: 2.1개</span>
+</div>
+<div class="cluster-districts">
+<span class="district-tag">부전2동</span>
+<span class="district-tag">안락2동</span>
+<span class="district-tag">괘법동</span>
+<span class="district-tag">중2동</span>
+<span class="district-tag">구포1동</span>
+<span class="district-tag">부곡2동</span>
+<span class="district-tag">연산4동</span>
+<span class="district-tag">거제3동</span>
+<span class="district-tag-more">외 10개 동네</span>
+</div>
+</div>
+<div class="cluster-group" style="border-left: 4px solid #FFD700;">
+<div class="cluster-header">
+<h4 style="color: #FFD700;">🏘️ 기본 인프라형 (66개 동네)</h4>
+<p class="cluster-desc">기본적인 시설만 갖춘 일반 주거지역</p>
+</div>
+<div class="cluster-stats">
+<span class="stat-item">🏥 동물병원: 1.7개</span>
+<span class="stat-item">☕ 애견카페: 0.0개</span>
+<span class="stat-item">🌳 공원: 2.2개</span>
+</div>
+<div class="cluster-districts">
+<span class="district-tag">당감4동</span>
+<span class="district-tag">가야2동</span>
+<span class="district-tag">하단1동</span>
+<span class="district-tag">사직1동</span>
+<span class="district-tag">구포2동</span>
+<span class="district-tag">안락1동</span>
+<span class="district-tag">연산6동</span>
+<span class="district-tag">문현2동</span>
+<span class="district-tag-more">외 58개 동네</span>
+</div>
+</div>
+</div>
+</div><style>
+        .clustering-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .clustering-info {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .clustering-info p {
+            font-size: 1.1rem;
+            color: #495057;
+            margin: 0;
+        }
+        
+        .cluster-groups {
+            display: grid;
+            gap: 1.5rem;
+        }
+        
+        .cluster-group {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+        }
+        
+        .cluster-group:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .cluster-header h4 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .cluster-desc {
+            color: #6c757d;
+            margin: 0 0 1rem 0;
+            font-size: 0.9rem;
+        }
+        
+        .cluster-stats {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: #e9ecef;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .cluster-districts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .district-tag {
+            background: #f1f3f4;
+            color: #495057;
+            padding: 0.25rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            border: 1px solid #dee2e6;
+        }
+        
+        .district-tag-more {
+            background: #007bff;
+            color: white;
+            padding: 0.25rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .cluster-stats {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .stat-item {
+                text-align: center;
+            }
+        }
+    </style>
 
 <!-- 클러스터링 분석 섹션 추가 -->
 <h3>🔬 클러스터링 분석</h3>
 <div class="clustering-section">
-    <div class="clustering-info">
-        <p>부산시 행정동을 시설 특성에 따라 4개 클러스터로 분류했습니다.</p>
-    </div>
-    
-    <div class="cluster-groups">
-        <div class="cluster-group" style="border-left: 4px solid #FF5733;">
-            <div class="cluster-header">
-                <h4 style="color: #FF5733;">🏢 종합 인프라형 (8개 동네)</h4>
-                <p class="cluster-desc">동물병원, 애견카페, 공원이 모두 잘 갖춰진 지역</p>
-            </div>
-            <div class="cluster-stats">
-                <span class="stat-item">🏥 동물병원: 6.5개</span>
-                <span class="stat-item">☕ 애견카페: 2.1개</span>
-                <span class="stat-item">🌳 공원: 14.2개</span>
-            </div>
-            <div class="cluster-districts">
-                <span class="district-tag">좌2동</span>
-                <span class="district-tag">명지1동</span>
-                <span class="district-tag">민락동</span>
-                <span class="district-tag">정관읍</span>
-                <span class="district-tag">개금3동</span>
-                <span class="district-tag">기장읍</span>
-                <span class="district-tag">부전1동</span>
-                <span class="district-tag">서1동</span>
-            </div>
-        </div>
-        
-        <div class="cluster-group" style="border-left: 4px solid #33FF57;">
-            <div class="cluster-header">
-                <h4 style="color: #33FF57;">🏥 의료 중심형 (40개 동네)</h4>
-                <p class="cluster-desc">동물병원이 많이 집중된 지역</p>
-            </div>
-            <div class="cluster-stats">
-                <span class="stat-item">🏥 동물병원: 5.8개</span>
-                <span class="stat-item">☕ 애견카페: 0.3개</span>
-                <span class="stat-item">🌳 공원: 6.8개</span>
-            </div>
-            <div class="cluster-districts">
-                <span class="district-tag">양정1동</span>
-                <span class="district-tag">구서1동</span>
-                <span class="district-tag">중1동</span>
-                <span class="district-tag">우3동</span>
-                <span class="district-tag">장전2동</span>
-                <span class="district-tag">남천1동</span>
-                <span class="district-tag">좌1동</span>
-                <span class="district-tag">남포동</span>
-                <span class="district-tag-more">외 32개 동네</span>
-            </div>
-        </div>
-        
-        <div class="cluster-group" style="border-left: 4px solid #3357FF;">
-            <div class="cluster-header">
-                <h4 style="color: #3357FF;">🌳 여가 중심형 (18개 동네)</h4>
-                <p class="cluster-desc">공원이 많아 산책하기 좋은 지역</p>
-            </div>
-            <div class="cluster-stats">
-                <span class="stat-item">🏥 동물병원: 1.7개</span>
-                <span class="stat-item">☕ 애견카페: 0.8개</span>
-                <span class="stat-item">🌳 공원: 9.6개</span>
-            </div>
-            <div class="cluster-districts">
-                <span class="district-tag">감전동</span>
-                <span class="district-tag">개금1동</span>
-                <span class="district-tag">구포1동</span>
-                <span class="district-tag">금곡동</span>
-                <span class="district-tag">당리동</span>
-                <span class="district-tag">동삼1동</span>
-                <span class="district-tag">만덕1동</span>
-                <span class="district-tag">반여1동</span>
-                <span class="district-tag-more">외 10개 동네</span>
-            </div>
-        </div>
-        
-        <div class="cluster-group" style="border-left: 4px solid #FF33A8;">
-            <div class="cluster-header">
-                <h4 style="color: #FF33A8;">☕ 카페 문화형 (18개 동네)</h4>
-                <p class="cluster-desc">애견카페가 발달한 문화적 지역</p>
-            </div>
-            <div class="cluster-stats">
-                <span class="stat-item">🏥 동물병원: 1.1개</span>
-                <span class="stat-item">☕ 애견카페: 1.4개</span>
-                <span class="stat-item">🌳 공원: 2.1개</span>
-            </div>
-            <div class="cluster-districts">
-                <span class="district-tag">가락본동</span>
-                <span class="district-tag">거제2동</span>
-                <span class="district-tag">괴정2동</span>
-                <span class="district-tag">금사회동동</span>
-                <span class="district-tag">남구청</span>
-                <span class="district-tag">대연3동</span>
-                <span class="district-tag">동래읍</span>
-                <span class="district-tag">부전2동</span>
-                <span class="district-tag-more">외 10개 동네</span>
-            </div>
-        </div>
-        
-    </div>
+<div class="clustering-info">
+<p>부산시 행정동을 반려견 시설 특성에 따라 5개 클러스터로 분류했습니다.</p>
 </div>
-
+<div class="cluster-groups">
+<div class="cluster-group" style="border-left: 4px solid #FF5733;">
+<div class="cluster-header">
+<h4 style="color: #FF5733;">🏢 종합 인프라형 (8개 동네)</h4>
+<p class="cluster-desc">동물병원, 애견카페, 공원이 모두 잘 갖춰진 지역</p>
+</div>
+<div class="cluster-stats">
+<span class="stat-item">🏥 동물병원: 6.5개</span>
+<span class="stat-item">☕ 애견카페: 2.1개</span>
+<span class="stat-item">🌳 공원: 14.2개</span>
+</div>
+<div class="cluster-districts">
+<span class="district-tag">좌2동</span>
+<span class="district-tag">명지1동</span>
+<span class="district-tag">민락동</span>
+<span class="district-tag">정관읍</span>
+<span class="district-tag">개금3동</span>
+<span class="district-tag">기장읍</span>
+<span class="district-tag">부전1동</span>
+<span class="district-tag">서1동</span>
+</div>
+</div>
+<div class="cluster-group" style="border-left: 4px solid #33FF57;">
+<div class="cluster-header">
+<h4 style="color: #33FF57;">🏥 의료 중심형 (40개 동네)</h4>
+<p class="cluster-desc">동물병원이 많이 집중된 지역</p>
+</div>
+<div class="cluster-stats">
+<span class="stat-item">🏥 동물병원: 5.8개</span>
+<span class="stat-item">☕ 애견카페: 0.3개</span>
+<span class="stat-item">🌳 공원: 6.8개</span>
+</div>
+<div class="cluster-districts">
+<span class="district-tag">양정1동</span>
+<span class="district-tag">구서1동</span>
+<span class="district-tag">중1동</span>
+<span class="district-tag">우3동</span>
+<span class="district-tag">장전2동</span>
+<span class="district-tag">남천1동</span>
+<span class="district-tag">좌1동</span>
+<span class="district-tag">남포동</span>
+<span class="district-tag-more">외 32개 동네</span>
+</div>
+</div>
+<div class="cluster-group" style="border-left: 4px solid #3357FF;">
+<div class="cluster-header">
+<h4 style="color: #3357FF;">🌳 여가 중심형 (18개 동네)</h4>
+<p class="cluster-desc">공원이 많아 산책하기 좋은 지역</p>
+</div>
+<div class="cluster-stats">
+<span class="stat-item">🏥 동물병원: 1.7개</span>
+<span class="stat-item">☕ 애견카페: 0.8개</span>
+<span class="stat-item">🌳 공원: 9.6개</span>
+</div>
+<div class="cluster-districts">
+<span class="district-tag">감전동</span>
+<span class="district-tag">개금1동</span>
+<span class="district-tag">구포1동</span>
+<span class="district-tag">금곡동</span>
+<span class="district-tag">당리동</span>
+<span class="district-tag">동삼1동</span>
+<span class="district-tag">만덕1동</span>
+<span class="district-tag">반여1동</span>
+<span class="district-tag-more">외 10개 동네</span>
+</div>
+</div>
+<div class="cluster-group" style="border-left: 4px solid #FF33A8;">
+<div class="cluster-header">
+<h4 style="color: #FF33A8;">☕ 카페 문화형 (18개 동네)</h4>
+<p class="cluster-desc">애견카페가 발달한 문화적 지역</p>
+</div>
+<div class="cluster-stats">
+<span class="stat-item">🏥 동물병원: 1.1개</span>
+<span class="stat-item">☕ 애견카페: 1.4개</span>
+<span class="stat-item">🌳 공원: 2.1개</span>
+</div>
+<div class="cluster-districts">
+<span class="district-tag">가락본동</span>
+<span class="district-tag">거제2동</span>
+<span class="district-tag">괴정2동</span>
+<span class="district-tag">금사회동동</span>
+<span class="district-tag">남구청</span>
+<span class="district-tag">대연3동</span>
+<span class="district-tag">동래읍</span>
+<span class="district-tag">부전2동</span>
+<span class="district-tag-more">외 10개 동네</span>
+</div>
+</div>
+<div class="cluster-group" style="border-left: 4px solid #FFD700;">
+<div class="cluster-header">
+<h4 style="color: #FFD700;">🏘️ 기본 인프라형 (66개 동네)</h4>
+<p class="cluster-desc">기본적인 시설만 갖춘 일반 주거지역</p>
+</div>
+<div class="cluster-stats">
+<span class="stat-item">🏥 동물병원: 1.7개</span>
+<span class="stat-item">☕ 애견카페: 0.0개</span>
+<span class="stat-item">🌳 공원: 2.2개</span>
+</div>
+<div class="cluster-districts">
+<span class="district-tag">가덕도동</span>
+<span class="district-tag">강서1동</span>
+<span class="district-tag">강서2동</span>
+<span class="district-tag">개금2동</span>
+<span class="district-tag">거제1동</span>
+<span class="district-tag">거제3동</span>
+<span class="district-tag">거제4동</span>
+<span class="district-tag">괴정1동</span>
+<span class="district-tag-more">외 58개 동네</span>
+</div>
+</div>
+</div>
+</div>
 <style>
     .clustering-section {
         margin: 2rem 0;
@@ -1270,10 +1589,9 @@ function updateRankingChart(topDistricts) {
     }
 </style>
 
-      </div>
-    </div>
-  <!-- Kakao 장소 필터링을 위한 스크립트 추가 -->  
-  <script>
+
+<!-- Kakao 장소 필터링을 위한 스크립트 추가 -->
+<script>
     // 걸을 수 있는 장소 카테고리
     const FILTER_CATEGORIES = [
       '도보여행',
@@ -1403,5 +1721,5 @@ function updateRankingChart(topDistricts) {
       console.log('searchAndFilterPlaces 함수를 통해 검색과 필터링을 한 번에 수행할 수 있습니다.');
     });
   </script>
-  </body>
+</body>
 </html>
